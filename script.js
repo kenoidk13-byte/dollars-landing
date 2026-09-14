@@ -38,7 +38,7 @@ function makeThread(anchorX, length) {
   };
 }
 
-const threadCount = Math.max(40, Math.round(window.innerWidth / 26));
+const threadCount = Math.max(60, Math.round(window.innerWidth / 16));
 const threads = [];
 const spacing = window.innerWidth / (threadCount + 1);
 const cx = window.innerWidth / 2;
