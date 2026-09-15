@@ -7,24 +7,30 @@
 <meta name="description" content="Dollars. Four dolls who outlived hell. Burlesque-noir rock from the wrong side of the afterlife.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter:wght@300;400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=38">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter+Tight:wght@300;400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=302">
 </head>
 <body>
+
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader-box">
+    <img id="preloaderImg" class="preloader-logo" src="Logo.webp?v=302" alt="">
+    <canvas id="preloaderCanvas" class="preloader-canvas"></canvas>
+  </div>
+  <span class="preloader-label">stitching&hellip;</span>
+  <span class="preloader-pct" id="preloaderPct">0%</span>
+</div>
 
 <canvas id="threads"></canvas>
 
 <header class="nav">
-  <a class="nav-logo" href="#top"><img src="Logo.png" alt="Dollars"></a>
+  <a class="nav-logo" href="#top"><img src="Logo.webp?v=302" alt="Dollars"></a>
   <nav class="nav-links">
     <a href="#manifesto">Manifesto</a>
-    <a href="#dolls">The Dolls</a>
+    <a href="#dolls">The band</a>
     <a href="#showreel">Gallery</a>
-    <a href="#join">Join</a>
+    <a href="#tracks">Tracks</a>
   </nav>
-  <button class="bug" data-scramble="ROT">
-    <span>4/4</span>
-  </button>
 </header>
 
 <main id="top">
@@ -36,7 +42,7 @@
       <span>DOLLARS DOLLARS DOLLARS DOLLARS</span>
     </div>
 
-    <img class="hero-logo" src="Logo.png" alt="Dollars — a ratty dollar-sign wordmark" data-tilt>
+    <img class="hero-logo" src="Logo.webp?v=302" alt="Dollars — a ratty dollar-sign wordmark" data-tilt>
 
     <p class="hero-tag">Ragged. Resurrected. Relentless.</p>
     <p class="hero-sub">Four dolls who outlived hell now play the loudest gig on the other side.<br>No refunds. No encore. No way back.</p>
@@ -58,22 +64,20 @@
   </section>
 
   <section class="manifesto" id="manifesto">
-    <div class="manifesto-stamp" aria-hidden="true">4 DOLLS · 1 LAST GIG</div>
-    <h2 class="manifesto-title">They cut us out of burlap, sewed us shut, and threw us away.</h2>
+    <h2 class="manifesto-title reveal">They cut us out<br>of burlap, sewed<br>us shut, and threw<br>us away.</h2>
     <div class="manifesto-text">
-      <p class="manifesto-body">
-        We were nobody's keepers. Melvin traded his band for a contract and
-        ended it on a rope. Rusty loved too hard and burned with the house.
-        The Voice sold his name to the stage. The Pulse hammered until his
-        heart gave out. Heaven didn't want us. Hell didn't dare.
+      <p class="manifesto-body reveal">
+        We didn't gather here to whine about fate. We gathered here to start a fire.
+        We are hardcore born from pain, and our only way out is the stage. We take
+        all the dirt they trampled us into and turn it into a heavy, merciless sound.
       </p>
-      <p class="manifesto-body">
-        So we crawled back through the stitch-holes, tuned our strings with
-        grave-dust, and bought a warped old amplifier for one dollar.
+      <p class="manifesto-body reveal" style="--d:.12s">
+        We are the puppets who ripped the strings from the puppeteer's hands.
+        We are the cursed who have stopped being afraid.
         <span class="mark">Everything after that was profit.</span>
       </p>
     </div>
-    <div class="manifesto-sign">— you know your worth. Now sing it.</div>
+    <div class="manifesto-sign reveal" style="--d:.24s">— you know your worth. Now sing it.</div>
   </section>
 
   <section class="dolls" id="dolls">
@@ -82,44 +86,39 @@
 
     <article class="doll" data-doll="melvin">
       <span class="doll-roundel" aria-hidden="true">
-        <span>STRING-BENDER ✦ THE TRAITOR ✦ CONTRACT SIGNED ✦ </span>
+        <span>HANGED BUT<br>NOT BROKEN</span>
       </span>
-      <div class="doll-stage">
+      <div class="doll-stage reveal">
         <span class="doll-sway">
-          <img src="guitar.png" alt="Melvin — the Hanged" data-tilt>
+          <img src="guitar2_pad.webp" alt="Melvin — the Hanged" data-tilt loading="lazy" decoding="async">
+          <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
-      <div class="doll-card">
-        <p class="doll-role">string-bender · the traitor</p>
-        <h3>MELVIN</h3>
+      <div class="doll-card reveal" style="--d:.08s">
+        <p class="doll-role">Hung six string</p>
+        <h3 data-scramble>MELVIN</h3>
         <span class="doll-title">“The Hanged”</span>
         <p class="doll-bio">
-          Once a man. A gifted guitarist who traded his bandmates, his family
-          and his friends for a contract, fame and money. He got everything —
-          and died alone in an empty flat, hollowed out by his own success.
+          He was once a human being — a talented guitarist who played in underground bands. But his talent was poisoned by arrogance. For the sake of a contract, fame, and money, he betrayed his band and abandoned his family; he trampled on those who loved him and sold out his friends. He lived by the principle that only he mattered. He believed music was his ticket to immortality and that people were merely tools to achieve his ends.
         </p>
-        <p class="doll-bio">
-          He finished the job with a rope. Heaven weighed his soul and found
-          it too heavy. Hell screened him and threw the interview out — he'd
-          only sow chaos there too. The noose isn't a costume. It's a receipt.
-        </p>
-        <span class="doll-stamp" aria-hidden="true">CASE CLOSED</span>
-        <span class="doll-scrawl">he begs for an encore he never gave</span>
+        <span class="doll-scrawl">His talent was poisoned by pride.</span>
+        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
 
     <article class="doll" data-doll="rusty">
       <span class="doll-roundel" aria-hidden="true">
-        <span>FOUR-STRING ✦ THE LOYALIST ✦ BURNED, NOT BURIED ✦ </span>
+        <span>EXHAUSTED<br>BUT STRONG</span>
       </span>
-      <div class="doll-stage">
+      <div class="doll-stage reveal" style="--d:.05s">
         <span class="doll-sway">
-          <img src="bass.png" alt="Rusty — the Ashed" data-tilt>
+          <img src="bass.webp" alt="Rusty — the Ashed" data-tilt loading="lazy" decoding="async">
+          <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
-      <div class="doll-card">
+      <div class="doll-card reveal" style="--d:.13s">
         <p class="doll-role">four-string · the loyalist</p>
-        <h3>RUSTY</h3>
+        <h3 data-scramble>RUSTY</h3>
         <span class="doll-title">“The Ashed”</span>
         <p class="doll-bio">
           He was never a person. He's a hand-sewn rag doll — burlap skin, one
@@ -131,23 +130,24 @@
           Everything turned to ash — except Rusty. Some fires make you softer.
           His made him louder.
         </p>
-        <span class="doll-stamp doll-stamp--gold" aria-hidden="true">HANDMADE</span>
-        <span class="doll-scrawl">still warm. still waiting by the mirror</span>
+        <span class="doll-scrawl">Tempered in the flames, the spirit is forged.</span>
+        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
 
     <article class="doll" data-doll="voice">
       <span class="doll-roundel" aria-hidden="true">
-        <span>VOCAL ✦ THE FACE ✦ SECOND NAME OF DOLLARS ✦ </span>
+        <span>STITCHED<br>SHUT, YET<br>HEARD</span>
       </span>
-      <div class="doll-stage">
+      <div class="doll-stage reveal" style="--d:.1s">
         <span class="doll-sway">
-          <img src="vocal.png" alt="The Voice — face of Dollars" data-tilt>
+          <img src="vocal.webp" alt="The Voice — face of Dollars" data-tilt loading="lazy" decoding="async">
+          <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
-      <div class="doll-card">
+      <div class="doll-card reveal" style="--d:.18s">
         <p class="doll-role">vocal · the face</p>
-        <h3>THE VOICE</h3>
+        <h3 data-scramble>THE VOICE</h3>
         <span class="doll-title">“Dollars' Second Name”</span>
         <p class="doll-bio">
           A voice that runs from a whisper to a scream without asking
@@ -159,99 +159,91 @@
           from the very first note. Dollars isn't just the band.
           <span class="mark">Dollars is his second name.</span>
         </p>
-        <span class="doll-stamp doll-stamp--bone" aria-hidden="true">ON EVERY LIP</span>
         <span class="doll-scrawl">first note. last bite.</span>
+        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
 
     <article class="doll" data-doll="pulse">
       <span class="doll-roundel" aria-hidden="true">
-        <span>DRUMS ✦ THE HEARTBEAT ✦ BEAT AGAINST BOREDOM ✦ </span>
+        <span>TORN BUT<br>HUNGRY FOR<br>RHYTHM</span>
       </span>
-      <div class="doll-stage">
+      <div class="doll-stage reveal" style="--d:.15s">
         <span class="doll-sway">
-          <img src="dram.png" alt="The Pulse — drummer of Dollars" data-tilt>
+          <img src="dram2.webp" alt="The Pulse — drummer of Dollars" data-tilt loading="lazy" decoding="async">
+          <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
-      <div class="doll-card">
+      <div class="doll-card reveal" style="--d:.23s">
         <p class="doll-role">drums · the heartbeat</p>
-        <h3>THE PULSE</h3>
-        <span class="doll-title">“The Heartbeat”</span>
+        <h3 data-scramble>STACY</h3>
+        <span class="doll-title">“The Tempo”</span>
         <p class="doll-bio">
-          The band's pulse. His rhythm is the heartbeat every other song
-          borrows. The kit is wired straight into his body — when he plays,
-          you can't tell where the drum ends and he begins.
+          She was neither a human nor a beloved childhood toy. Created as an
+          anti-stress voodoo doll, she sat on the desk of a perpetually
+          flustered Director in a drab, stuffy office. Whenever the Director
+          faced looming deadlines, collapsing workflows, or simply didn't know
+          what to do, he would stick pins into her.
         </p>
         <p class="doll-bio">
-          His hands are lightning on the cymbals. Every beat is a sentence
-          against boredom. No drummer, no band. That's not an opinion —
-          <span class="mark">it's arithmetic.</span>
+          She silently absorbed the folly, chaos, and hysterics of others. Her
+          mouth was stitched shut with coarse thread so she could not speak.
+          And she endured. Inside her canvas body beat a titanium metronome.
+          She loved the System and the Rhythm, yet all around her was a
+          shambles.
         </p>
-        <span class="doll-stamp doll-stamp--rust" aria-hidden="true">ONLY DRILLMASTER</span>
         <span class="doll-scrawl">listen for the heartbeat in the breakdown</span>
+        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
   </section>
 
+  <div class="footer-thread" aria-hidden="true"></div>
+
   <section class="showreel" id="showreel">
-    <h2 class="showreel-heading">CONCERT PHOTOGRAPHS</h2>
+    <h2 class="showreel-heading reveal" data-scramble>GALLERY</h2>
     <p class="showreel-note"><span class="drag-hint">drag the reel</span> — every shot was taken on a night we shouldn't have survived.</p>
 
-    <div class="reel" id="reel">
-      <div class="reel-track" id="reelTrack"></div>
+    <div class="reel-wrap">
+      <button class="reel-nav reel-prev" aria-label="Previous">←</button>
+      <div class="reel" id="reel">
+        <div class="reel-track" id="reelTrack"></div>
+      </div>
+      <button class="reel-nav reel-next" aria-label="Next">→</button>
+    </div>
+
+    <div class="reel-controls">
+      <button class="reel-nav-bottom reel-prev-bottom" aria-label="Previous">←</button>
+      <span>scroll and explore</span>
+      <button class="reel-nav-bottom reel-next-bottom" aria-label="Next">→</button>
     </div>
 
     <div class="lightbox" id="lightbox" hidden>
       <button class="lightbox-close" aria-label="Close">✕</button>
+      <button class="lightbox-nav lightbox-prev" aria-label="Previous">←</button>
+      <button class="lightbox-nav lightbox-next" aria-label="Next">→</button>
       <img id="lightboxImg" src="" alt="Concert photograph">
       <p id="lightboxCaption"></p>
     </div>
   </section>
 
-  <section class="join" id="join">
-    <div class="join-panel">
-      <div class="join-stamp" aria-hidden="true">CURRENTLY UNDERGROUND</div>
-      <h2>Become part of the<br>last dollar.</h2>
-      <p>Fan. Agent. Venue. Bookkeeper who "moved on". If you've got a pulse worth keeping, thread your name through the needle — the dolls read every stitch.</p>
+  <div class="footer-thread" aria-hidden="true"></div>
 
-      <form class="join-form" id="joinForm">
-        <label class="field">
-          <span>your name / stage alias</span>
-          <input type="text" name="name" placeholder="e.g. Baby Dreadful" required>
-        </label>
-        <label class="field">
-          <span>your contact thread</span>
-          <input type="email" name="email" placeholder="grave@somewhere.net" required>
-        </label>
-        <label class="field">
-          <span>what do you want from the dolls?</span>
-          <textarea name="msg" rows="4" placeholder="Booking, fan mail, a mercy killing of your office job…" required></textarea>
-        </label>
-        <button class="stitch-btn join-btn" type="submit" data-scramble="SEW IT SHUT">
-          <span>SEW IT SHUT</span>
-        </button>
-      </form>
-      <p class="join-done" id="joinDone" hidden>Stitch received. We'll crawl out of the dark when it's your turn. <span class="mark">$</span></p>
-    </div>
-
-    <div class="join-side">
-      <img src="button.png" alt="Dollars button badge" class="join-badge" data-tilt>
-      <div class="join-socials">
-        <a href="#" data-scramble="INSTAGRAM">Instagram</a>
-        <span>/</span>
-        <a href="#" data-scramble="SPOTIFY">Spotify</a>
-        <span>/</span>
-        <a href="#" data-scramble="BANDCAMP">Bandcamp</a>
-      </div>
-    </div>
+  <section class="tracks" id="tracks">
+    <h2 class="tracks-heading reveal" data-scramble>FUCK THE SYSTEM</h2>
+    <p class="tracks-note"><span class="drag-hint">press play</span> — ten songs recorded on the wrong side of the afterlife. earbuds only.</p>
+    <ol class="track-list" id="trackList"></ol>
+    <p class="tracks-note tracks-note--foot" aria-hidden="true">ten songs. zero refunds.</p>
   </section>
+
+  <audio id="trackAudio" preload="metadata"></audio>
 
   <footer class="footer">
     <div class="footer-thread" aria-hidden="true"></div>
-    <div class="footer-grid">
-      <div class="footer-big"><img src="Logo.png" alt="Dollars"></div>
+    <div class="footer-grid reveal">
+      <div class="footer-big"><img src="Logo.webp?v=302" alt="Dollars"></div>
       <div class="footer-line">
-        <span>© 2026 DOLLARS L.P. — a division of the afterlife.</span>
+        <span>© 2026 File13 (k13) — a division of the afterlife.</span>
         <span class="footer-sway">Ragged. Resurrected. Relentless.</span>
       </div>
       <div class="footer-line">
@@ -263,6 +255,6 @@
 
 </main>
 
-<script src="script.js?v=38"></script>
+<script src="script.js?v=302"></script>
 </body>
 </html>
