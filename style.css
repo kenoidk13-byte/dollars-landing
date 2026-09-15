@@ -345,6 +345,7 @@ img { display: block; max-width: 100%; }
   color: var(--bone);
 }
 .manifesto-text {
+  position: relative;
   grid-area: text;
   font-size: 16.5px;
   line-height: 1.9;
@@ -440,10 +441,10 @@ img { display: block; max-width: 100%; }
 @keyframes names-scroll { to { transform: translateX(-50%); } }
 
 /* per-doll accent */
-.doll[data-doll="melvin"] { --acc: #a83660; }
-.doll[data-doll="rusty"]  { --acc: #d8a84e; }
-.doll[data-doll="voice"]  { --acc: #e0d5b6; }
-.doll[data-doll="pulse"]  { --acc: #b0382c; }
+.doll[data-doll="melvin"] { --acc: #a83660; --glow: rgba(168,54,96,.7); }
+.doll[data-doll="rusty"]  { --acc: #d8a84e; --glow: rgba(216,168,78,.7); }
+.doll[data-doll="voice"]  { --acc: #e0d5b6; --glow: rgba(224,213,182,.7); }
+.doll[data-doll="pulse"]  { --acc: #b0382c; --glow: rgba(176,56,44,.7); }
 
 .doll {
   position: relative;
@@ -470,6 +471,24 @@ img { display: block; max-width: 100%; }
 .doll:nth-of-type(even) .doll-card  { order: 1; }
 .doll:nth-of-type(odd) .doll-roundel { right: auto; left: 10%; }
 
+/* big faint button behind the manifesto text block */
+.manifesto-text::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: calc(50% + 50px);
+  left: calc(50% + 300px);
+  transform: translate(-50%, -50%);
+  width: clamp(468px, 54vw, 756px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: url('button.webp') center / contain no-repeat;
+  opacity: .035;
+  animation: button-spin 90s linear infinite;
+  pointer-events: none;
+}
+@keyframes button-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
 .doll-sway {
   display: block;
   position: relative;
@@ -483,10 +502,12 @@ img { display: block; max-width: 100%; }
   width: auto;
   max-width: 60vw;
   object-fit: contain;
-  transition: filter .8s ease-in-out;
+  filter: drop-shadow(0 40px 70px rgba(0,0,0,.75));
+  transition: filter .5s ease-in-out, transform .4s cubic-bezier(.2,.8,.2,1);
 }
 .doll.hovering .doll-sway img {
-  filter: drop-shadow(0 0 60px color-mix(in srgb, var(--acc) 45%, transparent));
+  filter: drop-shadow(0 40px 90px var(--glow));
+  transition: filter .5s ease-in-out, transform .4s cubic-bezier(.2,.8,.2,1);
 }
 .doll-fx {
   position: absolute;

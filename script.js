@@ -21,7 +21,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   }
 
   const img = new Image();
-  img.src = 'Logo.webp?v=302';
+  img.src = 'Logo.webp?v=327';
   img.onload = () => start();
   img.onerror = () => { box.classList.add('done'); unlock(); };
 
@@ -216,7 +216,7 @@ function drawThread(thread, faint) {
     if (!c) continue;
     const tm = (b + 0.5) / THR_BUCKETS;
     const alpha = faint
-      ? Math.max(0.015, 0.04 - tm * 0.012)
+      ? Math.max(0.032, 0.082 - tm * 0.032)
       : Math.max(0.35, 0.6 - tm * 0.3);
     ctx.strokeStyle = `rgba(216,201,163,${alpha.toFixed(3)})`;
     ctx.beginPath();
