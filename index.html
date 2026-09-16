@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter+Tight:wght@300;400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=424">
+<link rel="stylesheet" href="style.css?v=427">
 </head>
 <body>
 
@@ -232,10 +232,10 @@
 
   <section class="tracks" id="tracks">
     <h2 class="tracks-heading reveal" data-scramble>FUCK THE SYSTEM</h2>
-    <p class="tracks-note"><span class="drag-hint">press play</span> — ten songs recorded on the wrong side of the afterlife. earbuds only.</p>
+    <p class="tracks-note"><span class="drag-hint">press play</span> — eleven songs recorded on the wrong side of the afterlife. earbuds only.</p>
     <ol class="track-list" id="trackList"></ol>
     <p class="tracks-note tracks-note--foot" aria-hidden="true">eleven songs. zero refunds.</p>
-    <div class="tracks-btn" aria-hidden="true"></div>
+    <div class="tracks-btn" data-tilt aria-hidden="true"></div>
   </section>
 
   <audio id="trackAudio" preload="metadata"></audio>
@@ -257,6 +257,10 @@
 
 </main>
 
-<script src="script.js?v=405"></script>
+<div class="cursor cursor--1" aria-hidden="true"><div class="cursor__inner"></div></div>
+<div class="cursor cursor--2" aria-hidden="true"><div class="cursor__inner"></div></div>
+
+<script src="lenis.min.js"></script>
+<script src="script.js?v=407"></script>
 </body>
 </html>

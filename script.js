@@ -336,20 +336,24 @@ $$('[data-scramble]').forEach((el) => {
 });
 
 /* ============ 3D tilt ============ */
+/* driven on window so it also works on pointer-events:none
+   decorative buttons (big faint circles) without stealing clicks */
 const tiltables = $$('[data-tilt]');
 function tiltHandler(e) {
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  const px = (e.clientX - r.left) / r.width - 0.5;
-  const py = (e.clientY - r.top) / r.height - 0.5;
-  el.style.transform = `perspective(900px) rotateX(${-py * 8}deg) rotateY(${px * 10}deg) translateY(-4px)`;
+  for (const el of tiltables) {
+    const r = el.getBoundingClientRect();
+    if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${-py * 8}deg) rotateY(${px * 10}deg) translateY(-4px)`;
+    } else {
+      el.style.transform = '';
+    }
+  }
 }
-function tiltReset(e) {
-  e.currentTarget.style.transform = '';
-}
-tiltables.forEach((el) => {
-  el.addEventListener('pointermove', tiltHandler);
-  el.addEventListener('pointerleave', tiltReset);
+window.addEventListener('pointermove', tiltHandler, { passive: true });
+window.addEventListener('pointerleave', () => {
+  tiltables.forEach((el) => { el.style.transform = ''; });
 });
 
 /* ============ doll sway on scroll + parallax ============ */
@@ -544,7 +548,7 @@ $$('.hero-eq i').forEach((bar) => {
 });
 
 window.addEventListener('scroll', scheduleScroll, { passive: true });
-window.addEventListener('resize', () => { dollDriver(); dollThreadDriver(); });
+window.addEventListener('resize', () => { dollDriver(); dollThreadDriver(); parallaxBtns(); });
 dollDriver();
 dollThreadDriver();
 
@@ -785,7 +789,7 @@ SONG_FILES.forEach((file, i) => {
 
 function toggleTrack(i) {
   if (currentTrack === i) {
-    if (trackAudio.paused) trackAudio.play();
+    if (trackAudio.paused) { trackAudio.currentTime = 0; trackAudio.play(); }
     else trackAudio.pause();
     return;
   }
@@ -799,6 +803,7 @@ const heroEq = $('#heroEq');
 const navEq = $('#navEq');
 function navPlaySync() {
   if (!navEq) return;
+  navEq.classList.toggle('visible', currentTrack >= 0);
   navEq.classList.toggle('playing', currentTrack >= 0 && !trackAudio.paused);
 }
 if (heroEq) {
@@ -838,8 +843,8 @@ trackAudio.addEventListener('durationchange', () => {
 trackAudio.addEventListener('ended', () => {
   if (currentTrack < trackRows.length - 1) toggleTrack(currentTrack + 1);
   else {
-    setTrackPlaying(-1, false);
-    currentTrack = -1;
+    setTrackPlaying(currentTrack, false);
+    trackAudio.pause();
     navPlaySync();
   }
 });
@@ -858,6 +863,28 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   if (rafId) cancelAnimationFrame(rafId);
   if (rafFloat) cancelAnimationFrame(rafFloat);
 }
+
+/* ============ buttons parallax on scroll ============ */
+const tracksBtn = document.querySelector('.tracks-btn');
+const manifestoBtn = document.querySelector('.manifesto-btn');
+function parallaxBtns() {
+  const vh = window.innerHeight;
+  const cy = vh / 2;
+  if (tracksBtn) {
+    const r = tracksBtn.getBoundingClientRect();
+    const elY = r.top + r.height / 2;
+    const off = ((elY - cy) / vh) * -260;
+    tracksBtn.style.translate = `0 ${off}px`;
+  }
+  if (manifestoBtn) {
+    const r = manifestoBtn.getBoundingClientRect();
+    const elY = r.top + r.height / 2;
+    const off = ((elY - cy) / vh) * -120;
+    manifestoBtn.style.translate = `-50% calc(-50% + ${off}px)`;
+  }
+}
+window.addEventListener('scroll', parallaxBtns, { passive: true });
+parallaxBtns();
 
 /* ============ scroll reveal ============ */
 const revTargets = '.reveal';
@@ -891,4 +918,72 @@ if (typeof IntersectionObserver === 'function') {
   timer = setInterval(check, 200);
   window.addEventListener('load', check, { once: true });
   check();
+})();
+/* ============ Lenis smooth scroll (same as hobro.digital) ============ */
+(function () {
+  if (typeof Lenis === 'undefined') return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lenis = new Lenis({
+    lerp: reduce ? 1 : 0.09,
+    wheelMultiplier: 1,
+    smoothWheel: !reduce,
+    syncTouch: false
+  });
+  window.lenis = lenis;
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  /* smooth anchor jumps instead of native instant jumps */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          lenis.scrollTo(target, { duration: 1.2 });
+        }
+      }
+    });
+  });
+})();
+
+/* ============ custom cursor (hobro style) ============ */
+(function () {
+  const dot = document.querySelector('.cursor--1');
+  const ring = document.querySelector('.cursor--2');
+  if (!dot || !ring) return;
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduce) return; /* keep native cursor */
+  document.documentElement.classList.add('cursor-mode');
+
+  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, shown = false;
+
+  document.addEventListener('mousemove', (e) => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px)`;
+    shown = true;
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+    shown = false;
+  });
+
+  const lerp = 0.28;
+  (function raf() {
+    rx += (mx - rx) * lerp;
+    ry += (my - ry) * lerp;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(raf);
+  })();
+
+  document.addEventListener('mousedown', () => ring.classList.add('is-down'));
+  document.addEventListener('mouseup', () => ring.classList.remove('is-down'));
 })();
