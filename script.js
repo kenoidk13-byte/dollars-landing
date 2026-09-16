@@ -405,8 +405,11 @@ const FLOAT = sw.map(() => ({
   sp2: 0.0008 + Math.random() * 0.0005
 }));
 let rafFloat = null;
+let _dollsPaused = false;
+window._dollsPaused = (v) => { _dollsPaused = v; };
 function applyFloat(t) {
   rafFloat = requestAnimationFrame(applyFloat);
+  if (_dollsPaused || document.hidden) return;
   if (document.hidden) return;
   for (let i = 0; i < sw.length; i++) {
     const f = FLOAT[i];
@@ -506,6 +509,12 @@ function dollFxInit() {
         for (const en of ents) en.target._paused = !en.isIntersecting;
       }, { rootMargin: '150px 0px' });
       fobs.observe(cv);
+      /* pause the float/step loops too whenever the dolls leave the viewport */
+      const fab = new IntersectionObserver((ents) => {
+        const on = ents.some((e) => e.isIntersecting);
+        if (typeof window._dollsPaused === 'function') window._dollsPaused(!on);
+      }, { rootMargin: '120px 0px' });
+      try { fab.observe($('.dolls') || cv); } catch (_) {}
     }
     (function step() {
       requestAnimationFrame(step);
