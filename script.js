@@ -281,6 +281,8 @@ const MOUSE_SPEED = 0.18;
 
 const BUTTON_SIZE = 8.8;
 let rafId = null;
+let isMobile = window.innerWidth <= 720;
+window.addEventListener('resize', () => { isMobile = window.innerWidth <= 720; });
 function render(t) {
   rafId = requestAnimationFrame(render);
   if (document.hidden) return;
@@ -290,8 +292,10 @@ function render(t) {
   last = t;
   for (const th of bgThreads) updateThread(th, dt);
   for (const th of bgThreads) drawThread(th, true);
-  for (const th of threads) updateThread(th, dt);
-  for (const th of threads) drawThread(th, false);
+  if (!isMobile) {
+    for (const th of threads) updateThread(th, dt);
+    for (const th of threads) drawThread(th, false);
+  }
 }
 let last = performance.now();
 rafId = requestAnimationFrame(render);

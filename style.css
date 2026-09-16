@@ -96,11 +96,13 @@ html { scroll-behavior: auto; } /* Lenis smooth scroll handles anchor jumps */
   --scrawl: 'Permanent Marker', cursive;
 }
 
+html { overflow-x: clip; }
+
 body {
   background: var(--bg);
   color: var(--bone);
   font-family: var(--body);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   cursor: auto;
 }
@@ -134,18 +136,7 @@ img { display: block; max-width: 100%; }
   padding: 14px 34px;
   min-height: 69px;
 }
-.nav-logo {
-  position: absolute;
-  left: clamp(14px, 3vw, 34px);
-  top: 50%;
-  transform: translateY(calc(-50% + 10px));
-}
-.nav-logo img {
-  height: 49px;
-  width: auto;
-  display: block;
-  filter: contrast(1.22) saturate(1.12) brightness(1.12) drop-shadow(0 2px 6px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(216,168,78,.16));
-}
+
 .nav-eq {
   position: absolute;
   right: clamp(14px, 3vw, 34px);
@@ -229,12 +220,23 @@ img { display: block; max-width: 100%; }
 }
 .bug:hover { transform: rotate(-2deg) scale(1.025); }
 
+
+/* universal typography — balanced wrapping + centered copy */
+:where(h1, h2, h3, h4, h5, h6, blockquote, figcaption, label, dt, dd, th, td, summary) {
+  text-wrap: balance;
+  text-align: center;
+}
+:where(p) { text-wrap: balance; }
+
 @media (max-width: 900px) {
   .nav-links { gap: 16px; }
   .nav-links a { font-size: 10px; letter-spacing: 2px; }
 }
 @media (max-width: 720px) {
-  .nav-links { display: none; }
+  .hero-orbit { display: none; }
+  .nav { padding: 14px 10px; }
+  .nav-links { gap: 10px; flex-wrap: wrap; }
+  .nav-links a { font-size: 9px; letter-spacing: 1px; }
 }
 
 /* ==================== HERO ==================== */
@@ -288,9 +290,14 @@ img { display: block; max-width: 100%; }
 .hero-logo {
   position: relative;
   z-index: 2;
-  width: min(817px, 92vw);
+  width: min(654px, 74vw);
+  margin-inline: auto;
+  display: block;
   filter: contrast(1.22) saturate(1.12) drop-shadow(0 0 30px rgba(216,168,78,.06));
   animation: hero-logo-float 8s ease-in-out infinite;
+}
+@media (min-width: 681px) {
+  .hero-logo { width: min(817px, 74vw); }
 }
 @keyframes hero-logo-float {
   0%, 100% {
@@ -309,18 +316,27 @@ img { display: block; max-width: 100%; }
   position: relative;
   z-index: 2;
   margin-top: 30px;
+  margin-inline: auto;
+  width: max-content;
+  max-width: 92vw;
+  text-align: center;
   font-family: var(--scrawl);
   font-size: clamp(22px, 4vw, 34px);
   color: var(--burlap);
+  text-wrap: balance;
 }
 .hero-sub {
   position: relative;
   z-index: 2;
   margin-top: 18px;
+  margin-inline: auto;
+  width: max-content;
+  max-width: 560px;
+  text-align: center;
   font-size: clamp(13px, 1.6vw, 15px);
   line-height: 1.9;
   color: var(--muted);
-  max-width: 560px;
+  text-wrap: balance;
 }
 .hero-cta { position: relative; z-index: 2; margin-top: 44px; }
 
