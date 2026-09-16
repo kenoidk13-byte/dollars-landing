@@ -221,6 +221,23 @@ img { display: block; max-width: 100%; }
 .bug:hover { transform: rotate(-2deg) scale(1.025); }
 
 
+/* ============ mobile performance (one shot) ============ */
+/* cap draw/repaint budget on small screens */
+@media (max-width: 900px) {
+  :root { --dpr-cap: 1.5; }
+  .preloader-logo, .hero-orbit, .orbit-ring, .sway-field, .marquee-2 { will-change: auto; }
+}
+@media (max-width: 720px) {
+  /* kill redundant drop-shadow/blur passes: posterize filters drop to near-flat */
+  .hero-eq, .nav-eq { filter: none; }
+  .doll-sway img, .doll-card img, .hero-logo { filter: none; }
+  .doll-card, .manifesto { box-shadow: none; }
+  .dolls-word { background-attachment: scroll; } /* kill iOS fixed-bg repaint each scroll */
+  .thread-doll, .doll-soul { opacity: .9; }
+}
+@media (max-width: 520px) {
+  .hero-scroll, .hero-orbit, .orbit-eq, .roundel { display: none; }
+}
 /* universal typography — balanced wrapping + centered copy */
 :where(h1, h2, h3, h4, h5, h6, p, blockquote, figcaption, label, dt, dd, th, td, summary) {
   text-wrap: balance;
