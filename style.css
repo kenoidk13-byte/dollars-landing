@@ -102,7 +102,7 @@ body {
   font-family: var(--body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: crosshair;
+  cursor: auto;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -133,13 +133,12 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   padding: 14px 34px;
   min-height: 69px;
-  background: linear-gradient(rgba(11,10,8,.8), rgba(11,10,8,0));
 }
 .nav-logo {
   position: absolute;
   left: clamp(14px, 3vw, 34px);
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% + 10px));
 }
 .nav-logo img {
   height: 49px;
@@ -189,6 +188,7 @@ img { display: block; max-width: 100%; }
 .nav-links {
   display: flex;
   gap: 26px;
+  transform: translateY(10px);
 }
 .nav-links a {
   font-size: 11px;
@@ -224,7 +224,7 @@ img { display: block; max-width: 100%; }
   font-size: 11px;
   letter-spacing: 2px;
   padding: 9px 14px;
-  cursor: crosshair;
+  cursor: auto;
   transition: transform .3s;
 }
 .bug:hover { transform: rotate(-2deg) scale(1.025); }
@@ -1313,14 +1313,4 @@ img { display: block; max-width: 100%; }
   .footer-line { font-size: 8px; letter-spacing: 1.5px; }
   .footer-mail-wrap { font-size: 8px; }
   .footer-sway { font-size: 9px; }
-}
-/* ============ custom cursor (hobro style) ============ */
-.cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity .3s; will-change: transform; }
-.cursor__inner { width: 100%; height: 100%; }
-.cursor--1 { width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--bone); }
-.cursor--2 { width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 1px solid rgba(230,220,180,.5); transition: width .35s, height .35s, margin .35s, border-color .35s; }
-.cursor--2.is-down { width: 22px; height: 22px; margin: -11px 0 0 -11px; border-color: var(--bone); }
-html.cursor-mode .cursor { opacity: 1; }
-@media (hover: hover) and (pointer: fine) {
-  html.cursor-mode, html.cursor-mode * { cursor: none !important; }
 }

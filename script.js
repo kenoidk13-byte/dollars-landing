@@ -96,8 +96,8 @@ window.addEventListener('resize', resizeCanvas);
 
 const SEGMENT = 12;
 const GRAVITY = 0.12;
-const MOUSE_FORCE = 0.72;
-const MOUSE_RADIUS = 110;
+const MOUSE_FORCE = 0.3;
+const MOUSE_RADIUS = 96;
 const DAMPING = 0.97;
 
 function makeThread(anchorX, length, iterations = 8) {
@@ -126,7 +126,8 @@ for (let i = 1; i <= threadCount; i++) {
   const x = spacing * i;
   const d = Math.min(1, Math.abs(x - cx) / (window.innerWidth / 2));
   const sideF = x > cx ? 1.25 : 1.1;
-  const length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF);
+  let length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF);
+  if (Math.abs(x - cx) < window.innerWidth * 0.12) length += 30;
   threads.push(makeThread(x, length));
 }
 
@@ -151,7 +152,7 @@ function updateThread(thread, dt) {
     thread.rewind = 120 + Math.random() * 240;
     thread.swTarget = (Math.random() - 0.5) * 2;
   }
-  thread.sw += (thread.swTarget - thread.sw) * 0.02 * dt;
+  thread.sw += (thread.swTarget - thread.sw) * 0.012 * dt;
 
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
@@ -169,7 +170,7 @@ function updateThread(thread, dt) {
 
   for (let i = 1; i < nodes.length; i++) {
     const n = nodes[i];
-    n.x += Math.sin((i * 0.5) + NOW * 0.001 * thread.swayScale) * thread.sw * 0.176;
+    n.x += Math.sin((i * 0.5) + NOW * 0.001 * thread.swayScale) * thread.sw * 0.1;
 
     const dx = n.x - mouse.x;
     const dy = n.y - mouse.y;
@@ -657,6 +658,8 @@ function lightboxShow(i) {
   $('#lightboxImg').src = GALLERY[lightboxIndex];
   $('#lightbox').hidden = false;
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  if (window.lenis) window.lenis.stop();
 }
 function openLightbox(src, i) {
   lightboxShow(i);
@@ -664,6 +667,8 @@ function openLightbox(src, i) {
 function closeLightbox() {
   $('#lightbox').hidden = true;
   document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+  if (window.lenis) window.lenis.start();
 }
 $('.lightbox-prev').addEventListener('click', (e) => {
   e.stopPropagation();
@@ -949,41 +954,4 @@ if (typeof IntersectionObserver === 'function') {
       }
     });
   });
-})();
-
-/* ============ custom cursor (hobro style) ============ */
-(function () {
-  const dot = document.querySelector('.cursor--1');
-  const ring = document.querySelector('.cursor--2');
-  if (!dot || !ring) return;
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!fine || reduce) return; /* keep native cursor */
-  document.documentElement.classList.add('cursor-mode');
-
-  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, shown = false;
-
-  document.addEventListener('mousemove', (e) => {
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = `translate(${mx}px, ${my}px)`;
-    shown = true;
-  }, { passive: true });
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-    shown = false;
-  });
-
-  const lerp = 0.28;
-  (function raf() {
-    rx += (mx - rx) * lerp;
-    ry += (my - ry) * lerp;
-    ring.style.transform = `translate(${rx}px, ${ry}px)`;
-    requestAnimationFrame(raf);
-  })();
-
-  document.addEventListener('mousedown', () => ring.classList.add('is-down'));
-  document.addEventListener('mouseup', () => ring.classList.remove('is-down'));
 })();
