@@ -8,13 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter+Tight:wght@300;400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=327">
+<link rel="stylesheet" href="style.css?v=423">
 </head>
 <body>
 
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-box">
-    <img id="preloaderImg" class="preloader-logo" src="Logo.webp?v=327" alt="">
+    <img id="preloaderImg" class="preloader-logo" src="Logo.webp?v=401" alt="">
     <canvas id="preloaderCanvas" class="preloader-canvas"></canvas>
   </div>
   <span class="preloader-label">stitching&hellip;</span>
@@ -24,13 +24,14 @@
 <canvas id="threads"></canvas>
 
 <header class="nav">
-  <a class="nav-logo" href="#top"><img src="Logo.webp?v=327" alt="Dollars"></a>
+  <a class="nav-logo" href="#top"><img src="Logo.webp?v=389" alt="Dollars"></a>
   <nav class="nav-links">
     <a href="#manifesto">Manifesto</a>
     <a href="#dolls">The band</a>
     <a href="#showreel">Gallery</a>
     <a href="#tracks">Tracks</a>
   </nav>
+  <span class="nav-eq" id="navEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
 </header>
 
 <main id="top">
@@ -42,14 +43,14 @@
       <span>DOLLARS DOLLARS DOLLARS DOLLARS</span>
     </div>
 
-    <img class="hero-logo" src="Logo.webp?v=327" alt="Dollars — a ratty dollar-sign wordmark" data-tilt>
+    <img class="hero-logo" src="Logo.webp?v=401" alt="Dollars — a ratty dollar-sign wordmark" data-tilt>
 
     <p class="hero-tag">Ragged. Resurrected. Relentless.</p>
     <p class="hero-sub">Four dolls who outlived hell now play the loudest gig on the other side.<br>No refunds. No encore. No way back.</p>
 
-    <div class="hero-eq" aria-hidden="true">
+    <button class="hero-eq" id="heroEq" type="button" aria-label="Play the anthem">
       <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-    </div>
+    </button>
 
     <div class="hero-cta">
       <a class="stitch-btn" href="#manifesto" data-scramble="SCROLL DOWN">
@@ -66,6 +67,7 @@
   <section class="manifesto" id="manifesto">
     <h2 class="manifesto-title reveal">They cut us out<br>of burlap, sewed<br>us shut, and threw<br>us away.</h2>
     <div class="manifesto-text">
+      <span class="manifesto-btn" data-tilt aria-hidden="true"></span>
       <p class="manifesto-body reveal">
         We didn't gather here to whine about fate. We gathered here to start a fire.
         We are hardcore born from pain, and our only way out is the stage. We take
@@ -74,7 +76,6 @@
       <p class="manifesto-body reveal" style="--d:.12s">
         We are the puppets who ripped the strings from the puppeteer's hands.
         We are the cursed who have stopped being afraid.
-        <span class="mark">Everything after that was profit.</span>
       </p>
     </div>
     <div class="manifesto-sign reveal" style="--d:.24s">— you know your worth. Now sing it.</div>
@@ -95,7 +96,7 @@
         </span>
       </div>
       <div class="doll-card reveal" style="--d:.08s">
-        <p class="doll-role">Hung six string</p>
+        <p class="doll-role">Six-seven string · power</p>
         <h3 data-scramble>MELVIN</h3>
         <span class="doll-title">“The Hanged”</span>
         <p class="doll-bio">
@@ -117,9 +118,9 @@
         </span>
       </div>
       <div class="doll-card reveal" style="--d:.13s">
-        <p class="doll-role">four-string · the loyalist</p>
-        <h3 data-scramble>RUSTY</h3>
-        <span class="doll-title">“The Ashed”</span>
+        <p class="doll-role">five string · the favorite doll</p>
+        <h3 data-scramble>Neil</h3>
+        <span class="doll-title">“Rusty”</span>
         <p class="doll-bio">
           He was never a person. He's a hand-sewn rag doll — burlap skin, one
           button eye, a black-thread cross for the other. A boy called him his
@@ -157,7 +158,6 @@
         <p class="doll-bio">
           Every song is a confession. Every show is a rebirth. Fans know him
           from the very first note. Dollars isn't just the band.
-          <span class="mark">Dollars is his second name.</span>
         </p>
         <span class="doll-scrawl">first note. last bite.</span>
         <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
@@ -202,7 +202,7 @@
 
   <section class="showreel" id="showreel">
     <h2 class="showreel-heading reveal" data-scramble>GALLERY</h2>
-    <p class="showreel-note"><span class="drag-hint">drag the reel</span> — every shot was taken on a night we shouldn't have survived.</p>
+    <p class="showreel-note"><span class="drag-hint">Savor every frame</span> — every shot was taken on a night we shouldn't have survived.</p>
 
     <div class="reel-wrap">
       <button class="reel-nav reel-prev" aria-label="Previous">←</button>
@@ -219,11 +219,12 @@
     </div>
 
     <div class="lightbox" id="lightbox" hidden>
-      <button class="lightbox-close" aria-label="Close">✕</button>
       <button class="lightbox-nav lightbox-prev" aria-label="Previous">←</button>
       <button class="lightbox-nav lightbox-next" aria-label="Next">→</button>
-      <img id="lightboxImg" src="" alt="Concert photograph">
-      <p id="lightboxCaption"></p>
+      <div class="lightbox-stage">
+        <button class="lightbox-close" aria-label="Close">✕</button>
+        <img id="lightboxImg" src="" alt="Concert photograph">
+      </div>
     </div>
   </section>
 
@@ -233,7 +234,8 @@
     <h2 class="tracks-heading reveal" data-scramble>FUCK THE SYSTEM</h2>
     <p class="tracks-note"><span class="drag-hint">press play</span> — ten songs recorded on the wrong side of the afterlife. earbuds only.</p>
     <ol class="track-list" id="trackList"></ol>
-    <p class="tracks-note tracks-note--foot" aria-hidden="true">ten songs. zero refunds.</p>
+    <p class="tracks-note tracks-note--foot" aria-hidden="true">eleven songs. zero refunds.</p>
+    <div class="tracks-btn" aria-hidden="true"></div>
   </section>
 
   <audio id="trackAudio" preload="metadata"></audio>
@@ -241,13 +243,13 @@
   <footer class="footer">
     <div class="footer-thread" aria-hidden="true"></div>
     <div class="footer-grid reveal">
-      <div class="footer-big"><img src="Logo.webp?v=327" alt="Dollars"></div>
-      <div class="footer-line">
+      <div class="footer-line footer-line--l">
         <span>© 2026 File13 (k13) — a division of the afterlife.</span>
         <span class="footer-sway">Ragged. Resurrected. Relentless.</span>
       </div>
-      <div class="footer-line">
-        <span>all dollar signs reserved</span>
+      <div class="footer-big"><img src="Logo.webp?v=401" alt="Dollars" data-tilt></div>
+      <div class="footer-line footer-line--r">
+        <span class="footer-mail-wrap">E-mail: <a class="footer-mail" href="mailto:Kenoidk13@gmail.com">Kenoidk13@gmail.com</a></span>
         <a href="#top" data-scramble="BACK TO THE ROPE">back to the rope ▲</a>
       </div>
     </div>
@@ -255,6 +257,6 @@
 
 </main>
 
-<script src="script.js?v=327"></script>
+<script src="script.js?v=405"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   }
 
   const img = new Image();
-  img.src = 'Logo.webp?v=327';
+  img.src = 'Logo.webp?v=389';
   img.onload = () => start();
   img.onerror = () => { box.classList.add('done'); unlock(); };
 
@@ -95,8 +95,8 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 const SEGMENT = 12;
-const GRAVITY = 0.15;
-const MOUSE_FORCE = 0.9;
+const GRAVITY = 0.12;
+const MOUSE_FORCE = 0.72;
 const MOUSE_RADIUS = 110;
 const DAMPING = 0.97;
 
@@ -116,7 +116,7 @@ function makeThread(anchorX, length, iterations = 8) {
   };
 }
 
-const threadCount = Math.min(90, Math.max(60, Math.round(window.innerWidth / 16)));
+const threadCount = Math.min(130, Math.max(80, Math.round(window.innerWidth / 10)));
 const threads = [];
 const spacing = window.innerWidth / (threadCount + 1);
 const cx = window.innerWidth / 2;
@@ -133,7 +133,7 @@ for (let i = 1; i <= threadCount; i++) {
 /* faint background layer — the same threads, 3x longer, barely visible */
 const bgThreads = [];
 const BG_LEN_MULT = 3;
-const bgCount = Math.min(150, Math.max(90, Math.round(threadCount * 1.8)));
+const bgCount = Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
 const bgSpacing = window.innerWidth / (bgCount + 1);
 for (let i = 1; i <= bgCount; i++) {
   const x = bgSpacing * (i + 0.25);
@@ -169,7 +169,7 @@ function updateThread(thread, dt) {
 
   for (let i = 1; i < nodes.length; i++) {
     const n = nodes[i];
-    n.x += Math.sin((i * 0.5) + NOW * 0.001 * thread.swayScale) * thread.sw * 0.22;
+    n.x += Math.sin((i * 0.5) + NOW * 0.001 * thread.swayScale) * thread.sw * 0.176;
 
     const dx = n.x - mouse.x;
     const dy = n.y - mouse.y;
@@ -229,17 +229,56 @@ function drawThread(thread, faint) {
 
   const last = nodes[n - 1];
   if (faint) return;
-  const size = BUTTON_SIZE;
-  if (btnImg.complete && btnImg.naturalWidth > 0) {
-    ctx.drawImage(btnImg, last.x - size / 2, last.y - size / 2, size, size);
+  const r = BUTTON_SIZE / 2;
+  const cx = last.x, cy = last.y;
+
+  ctx.save();
+
+  // outer rim
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  const grad = ctx.createLinearGradient(0, cy - r, 0, cy + r);
+  grad.addColorStop(0, '#dbd3c0');
+  grad.addColorStop(0.45, '#a59d89');
+  grad.addColorStop(1, '#655d50');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.strokeStyle = '#3a3f3a';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // bevel highlight (top-left)
+  ctx.beginPath();
+  ctx.arc(cx - r * 0.2, cy - r * 0.2, r * 0.62, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,244,214,0.3)';
+  ctx.fill();
+
+  // inner ring (bevel depression)
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.68, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(70,62,48,0.55)';
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+
+  // four thread holes (2×2)
+  const holeR = r * 0.14;
+  const holeOff = r * 0.26;
+  ctx.fillStyle = '#000';
+  ctx.globalCompositeOperation = 'destination-out';
+  const holes = [[-1,-1],[1,-1],[-1,1],[1,1]];
+  for (const [hx, hy] of holes) {
+    ctx.beginPath();
+    ctx.arc(cx + hx * holeOff, cy + hy * holeOff, holeR, 0, Math.PI * 2);
+    ctx.fill();
   }
+  ctx.globalCompositeOperation = 'source-over';
+
+  ctx.restore();
 }
 
 const MOUSE_SPEED = 0.18;
 
-const btnImg = new Image();
-btnImg.src = 'button.webp';
-const BUTTON_SIZE = 8;
+const BUTTON_SIZE = 8.8;
 let rafId = null;
 function render(t) {
   rafId = requestAnimationFrame(render);
@@ -511,44 +550,28 @@ dollThreadDriver();
 
 /* ============ gallery ============ */
 const GALLERY = [
-  "galery/20260909_194406_0_UTC_0.webp",
   "galery/20260910_074122_0_UTC_0.webp",
   "galery/20260910_082355_0_UTC_0.webp",
   "galery/20260910_085256_0_UTC_0.webp",
-  "galery/20260910_090019_0_UTC_0.webp",
-  "galery/20260910_093140_0_UTC_0.webp",
-  "galery/20260910_093143_0_UTC_0.webp",
-  "galery/20260910_093520_0_UTC_0.webp",
   "galery/20260910_094159_0_UTC_0.webp",
-  "galery/20260910_094633_0_UTC_0.webp",
-  "galery/20260910_094814_0_UTC_0.webp",
   "galery/20260910_100136_0_UTC_0.webp",
   "galery/20260910_112837_0_UTC_0.webp",
   "galery/20260910_174507_0_UTC_0.webp",
   "galery/20260910_190406_0_UTC_0.webp",
   "galery/20260910_190739_0_UTC_0.webp",
-  "galery/20260910_191047_0_UTC_0.webp",
-  "galery/20260911_115417_0_UTC_0.webp"
+  "galery/20260910_191047_0_UTC_0.webp"
 ];
 const CAPS = [
-  "the room, before the first chord",
   "who sold what to stand here?",
   "gold dust and feedback",
   "you can't outrun the doll",
-  "the crowd does the screaming instead",
-  "bass-thunder, front row",
-  "stitches never show under strobe",
-  "red phone. no one's home.",
   "sound check for the afterlife",
-  "the second nome / second name",
-  "hair pins and heartbeats",
   "four dolls, one heartbeat",
   "interval — nobody leaves",
   "the encore that wasn't",
   "amber light, rust voice",
   "last dollar, first amen",
-  "the curtain is just fabric",
-  "burned, not buried"
+  "the curtain is just fabric"
 ];
 
 const track = $('#reelTrack');
@@ -569,7 +592,7 @@ const reelNext = $('.reel-next');
 const reelPrevBottom = $('.reel-prev-bottom');
 const reelNextBottom = $('.reel-next-bottom');
 function pageReel(dir) {
-  reel.scrollBy({ left: dir * reel.clientWidth * 0.85, behavior: 'auto' });
+  reel.scrollBy({ left: dir * reel.clientWidth * 0.85, behavior: 'smooth' });
 }
 let reelTimer = null;
 function startReelScroll(dir) {
@@ -628,7 +651,6 @@ let lightboxIndex = 0;
 function lightboxShow(i) {
   lightboxIndex = (i + GALLERY.length) % GALLERY.length;
   $('#lightboxImg').src = GALLERY[lightboxIndex];
-  $('#lightboxCaption').textContent = CAPS[lightboxIndex] || 'untitled night';
   $('#lightbox').hidden = false;
   document.body.style.overflow = 'hidden';
 }
@@ -663,9 +685,10 @@ const SONG_FILES = [
   'Anthem.mp3',
   'Below the Tread.mp3',
   'Fuck the System.mp3',
+  'Gods and Monsters.mp3',
   'Iron.mp3',
   'Pay the Price.mp3',
-  'Redacted Asset.mp3',
+  'Redacted assets.mp3',
   'Ronin (The Empty Blade).mp3',
   'Self-Entombed.mp3',
   'War.mp3',
@@ -701,7 +724,7 @@ SONG_FILES.forEach((file, i) => {
   btn.className = 'track-play';
   btn.type = 'button';
   btn.setAttribute('aria-label', `Play ${title}`);
-  btn.innerHTML = '<span class="track-play-ic">▶</span>';
+  btn.innerHTML = '<span class="track-play-ic"><svg viewBox="0 0 12 12" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M2.6 2.2 V9.8 L9.4 6 Z"/></svg></span>';
 
   li.innerHTML = `
     <span class="track-num">${String(i + 1).padStart(2, '0')}</span>
@@ -772,8 +795,34 @@ function toggleTrack(i) {
   trackAudio.play();
 }
 
-trackAudio.addEventListener('play', () => setTrackPlaying(currentTrack, true));
-trackAudio.addEventListener('pause', () => setTrackPlaying(currentTrack, false));
+const heroEq = $('#heroEq');
+const navEq = $('#navEq');
+function navPlaySync() {
+  if (!navEq) return;
+  navEq.classList.toggle('playing', currentTrack >= 0 && !trackAudio.paused);
+}
+if (heroEq) {
+  heroEq.addEventListener('click', () => toggleTrack(0));
+}
+if (navEq) {
+  navEq.addEventListener('click', () => {
+    if (currentTrack < 0) toggleTrack(0);
+    else toggleTrack(currentTrack);
+  });
+}
+
+trackAudio.addEventListener('play', () => {
+  setTrackPlaying(currentTrack, true);
+  const eq = $('#heroEq');
+  if (eq) eq.classList.add('playing');
+  navPlaySync();
+});
+trackAudio.addEventListener('pause', () => {
+  setTrackPlaying(currentTrack, false);
+  const eq = $('#heroEq');
+  if (eq) eq.classList.remove('playing');
+  navPlaySync();
+});
 trackAudio.addEventListener('timeupdate', () => {
   const row = trackRows[currentTrack];
   if (!row || seekActive) return;
@@ -791,12 +840,14 @@ trackAudio.addEventListener('ended', () => {
   else {
     setTrackPlaying(-1, false);
     currentTrack = -1;
+    navPlaySync();
   }
 });
 
 /* Safari / reduced motion respect */
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   $$('.ticker-track').forEach((el) => { el.style.animation = 'none'; });
+  $$('.hero-logo').forEach((el) => { el.style.animation = 'none'; });
   $$('.track-eq i').forEach((el) => { el.style.animation = 'none'; });
   $$('[data-tilt]').forEach((el) => { el.style.transition = 'none'; });
   $$('.doll-roundel').forEach((el) => { el.style.animation = 'none'; });
