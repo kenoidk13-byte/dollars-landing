@@ -222,11 +222,17 @@ img { display: block; max-width: 100%; }
 
 
 /* universal typography — balanced wrapping + centered copy */
-:where(h1, h2, h3, h4, h5, h6, blockquote, figcaption, label, dt, dd, th, td, summary) {
+:where(h1, h2, h3, h4, h5, h6, p, blockquote, figcaption, label, dt, dd, th, td, summary) {
   text-wrap: balance;
   text-align: center;
 }
-:where(p) { text-wrap: balance; }
+/* dense edges: binomial widths for many two-digit numbers */
+.doll-card .count,
+.track-stat em,
+.track-time,
+.footer-pct { font-variant-numeric: tabular-nums; }
+/* folder-y dividers line up tight */
+.code-line { letter-spacing: .3px; }
 
 @media (max-width: 900px) {
   .nav-links { gap: 16px; }
