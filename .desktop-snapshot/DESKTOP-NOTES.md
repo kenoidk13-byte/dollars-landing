@@ -15,7 +15,7 @@
 - Dolls: grid 1.15fr/1fr, doll-sway img height min(94vh, 1104px), даже-блоки (nth-of-type even) — картинка справа transform translateX(-70px).
 - Manifesto: grid 1.15fr/1fr (title/text/sign).
 - Showreel: горизонтальный reel, высота img clamp(220px, 40vh, 400px).
-- Tracks: track-list max-width 1180px, grid-колонки 56px 1fr auto auto.
+- Tracks: track-list max-width 1180px, grid-колонки 56px 1fr auto auto. **Текст песен** `.track-title` font-size `clamp(13.5px, 1.8vw, 16.4px)` (фикс от 2026-09-17), вертикальный шаг строк `.track-row` padding `19.8px 14px` (было 22px — уменьшен на 10%).
 - Footer: grid 1fr auto 1fr.
 - doll-fx canvas 680x940, эмбер-частицы.
 - **hover-свечение персонажей**: `.doll.hovering .doll-sway img { filter: drop-shadow(0 40px 90px var(--glow)); }` — ДЕСКТОП, оставить как есть.
@@ -37,3 +37,8 @@
 2. Правки мобильной версии — ТОЛЬКО внутри @media (max-width: ...) блоков.
 3. Никогда не менять значения в общих (не-медиа) секциях.
 4. После правок — открывать index.html и проверять оба брейкпоинта.
+5. СНАПШОТ: любые осознанные правки десктопа (>900px) — синхронизировать с `.desktop-snapshot/` (cp style.css index.html script.js) и обновлять этот файл.
+
+## Зафиксированные десктопные значения трек-листа (2026-09-17)
+- `.track-title` font-size: `clamp(13.5px, 1.8vw, 16.4px)` (2 раза уменьшали по 1pt: было 19px)
+- `.track-row` padding: `19.8px 14px` (вертикальный шаг строк -10%, было 22px)
