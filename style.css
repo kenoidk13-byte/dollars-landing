@@ -195,7 +195,7 @@ img { display: block; max-width: 100%; }
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
+  width: 28px;
   height: 32px;
   padding: 0;
   border: 0;
@@ -214,7 +214,7 @@ img { display: block; max-width: 100%; }
 }
 .nav-burger span:first-child { top: 11px; }
 .nav-burger span:last-child { bottom: 11px; }
-.nav-burger:hover span { background: var(--gold); }
+.nav-burger:hover span { background: var(--bone); }
 .nav.nav-open .nav-burger span:first-child { transform: translateY(4.2px) rotate(45deg); }
 .nav.nav-open .nav-burger span:last-child { transform: translateY(-4.2px) rotate(-45deg); }
 
@@ -233,7 +233,7 @@ img { display: block; max-width: 100%; }
   display: block;
 }
 
-/* mobile nav = always-on dark bar: burger + centered logo, links live in burger dropdown */
+/* mobile nav = always-on dark bar: burger opens a fullscreen centered menu */
 @media (max-width: 900px) {
   .nav {
     background: rgba(11, 10, 8, .92);
@@ -247,31 +247,69 @@ img { display: block; max-width: 100%; }
     opacity: 1;
     transition: opacity .45s ease;
   }
+
+  /* closed: plain bar, no links */
   .nav .nav-links { display: none; }
+
+  /* open: fullscreen dark panel, links stacked vertically in the center */
   .nav.nav-open .nav-links {
     display: flex;
-    position: absolute;
-    left: 50%;
-    top: calc(100% + 4px);
-    transform: translateX(-50%);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: none;
     flex-direction: column;
-    gap: 12px;
-    padding: 22px 40px;
-    background: rgba(11,10,8,.94);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(6px);
-    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin: 0;
+    background: rgba(11, 10, 8, .97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 400;
   }
-  .nav.nav-open .nav-links a { font-size: 13px; animation: nav-link-in .35s ease both; }
-  .nav.nav-open .nav-links a:nth-child(1) { animation-delay: .02s; }
-  .nav.nav-open .nav-links a:nth-child(2) { animation-delay: .05s; }
-  .nav.nav-open .nav-links a:nth-child(3) { animation-delay: .08s; }
-  .nav.nav-open .nav-links a:nth-child(4) { animation-delay: .11s; }
+  .nav.nav-open .nav-links a {
+    display: block;
+    width: max-content;
+    font-family: var(--disp);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bone);
+    opacity: 1;
+  }
+  .nav.nav-open .nav-links a:hover { color: var(--gold); }
+  .nav.nav-open .nav-close { display: block; }
 }
-@keyframes nav-link-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+/* close X pinned top-right of the fullscreen menu (mobile only) */
+.nav-close {
+  display: none;
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 401;
 }
+.nav-close span {
+  position: absolute;
+  left: 0; top: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--rust);
+  border-radius: 2px;
+  transition: background .3s;
+  transform-origin: center;
+}
+.nav-close span:first-child { transform: translateY(-50%) rotate(45deg); }
+.nav-close span:last-child { transform: translateY(-50%) rotate(-45deg); }
+.nav-close:hover span { background: var(--rust); }
 .nav.nav-open .nav-mini,
 .nav.nav-open .nav-eq { opacity: 0; }
 
@@ -1332,7 +1370,7 @@ img { display: block; max-width: 100%; }
   .track-eq { display: none; }
   .track-list { padding: 0; }
   .tracks { padding: clamp(60px, 10vh, 120px) 24px 90px; }
-  .doll-sway img { height: min(80vh, 700px); }
+  .doll-sway img { height: min(150vh, 1310px); }
 }
 
 /* — mobile — */
@@ -1360,7 +1398,7 @@ img { display: block; max-width: 100%; }
   .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
 
   .showreel { padding: clamp(60px, 10vh, 120px) 20px; }
-  .showreel-note { font-size: 12px; padding: 0 20px; }
+  .showreel-note { font-size: 14px; padding: 0 20px; }
   .drag-hint { font-size: 13px; }
   .reel-track { padding: 20px 20px; }
   .reel-track img { height: clamp(180px, 36vh, 300px); }
@@ -1369,7 +1407,7 @@ img { display: block; max-width: 100%; }
 
   .track-row { grid-template-columns: 28px 1fr auto auto; gap: 10px; padding: 16px 0; }
   .track-num { font-size: 8.7px; letter-spacing: 1.3px; }
-  .track-title { font-size: clamp(10.7px, 3vw, 13.7px); }
+  .track-title { font-size: clamp(12.7px, 3.4vw, 15.7px); }
   .track-time-lab { font-size: 10.7px; letter-spacing: 1.7px; }
   .track-play { width: 34px; height: 34px; }
   .track-list { padding: 0; margin-top: 36px; }
@@ -1387,11 +1425,11 @@ img { display: block; max-width: 100%; }
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
   .doll-sway, .doll-stage { min-width: 0; }
   .doll[data-doll="rusty"] .doll-sway { transform: translateX(-25px); }
-  .doll-sway img { height: min(78vh, 620px); max-width: 100%; filter: none; }
+  .doll-sway img { height: min(145vh, 1160px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: clamp(22px, 5.5vw, 36px); }
-  .doll-title { font-size: 14px; }
-  .doll-bio { font-size: 14px; line-height: 1.75; }
+  .doll-title { font-size: 16px; }
+  .doll-bio { font-size: 16px; line-height: 1.75; }
   .doll-scrawl { font-size: 13px; margin-top: 18px; }
 
   .tracks { padding: clamp(40px, 8vh, 80px) 20px 60px; }
@@ -1414,14 +1452,14 @@ img { display: block; max-width: 100%; }
 @media (max-width: 430px) {
   .hero { padding: 80px 20px 50px; }
   .hero-tag { font-size: 18px; margin-top: 16px; }
-  .hero-sub { font-size: 12px; max-width: 100%; }
+  .hero-sub { font-size: 14px; max-width: 100%; }
   .stitch-btn { font-size: 11px; padding: 14px 24px; letter-spacing: 2px; }
   .hero-scroll { bottom: 16px; }
 
   .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
   .manifesto-title { font-size: 24px; }
-  .manifesto-text { font-size: 13px; }
-  .manifesto-body { font-size: 14px; line-height: 1.8; }
+  .manifesto-text { font-size: 15px; }
+  .manifesto-body { font-size: 16px; line-height: 1.8; }
   .manifesto-btn { width: 260px; opacity: .04; }
 
   .tracks-btn { width: 220px; }
@@ -1439,18 +1477,18 @@ img { display: block; max-width: 100%; }
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
   .doll-sway, .doll-stage { min-width: 0; }
   .doll[data-doll="rusty"] .doll-sway { transform: translateX(-25px); }
-  .doll-sway img { height: min(64vh, 440px); max-width: 100%; filter: none; }
+  .doll-sway img { height: min(120vh, 823px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: 20px; letter-spacing: 1px; }
   .doll-role { font-size: 9px; letter-spacing: 3px; margin-bottom: 10px; }
-  .doll-title { font-size: 13px; margin-top: 6px; }
-  .doll-bio { font-size: 13px; line-height: 1.7; margin-top: 16px; }
+  .doll-title { font-size: 15px; margin-top: 6px; }
+  .doll-bio { font-size: 15px; line-height: 1.7; margin-top: 16px; }
   .doll-scrawl { font-size: 12px; margin-top: 14px; padding-top: 10px; }
   .doll-more { font-size: 10px; padding: 10px 18px; }
 
   .showreel { padding: clamp(40px, 8vh, 80px) 20px; }
   .showreel-heading, .tracks-heading { font-size: 32px; }
-  .showreel-note { font-size: 11px; padding: 0 20px; }
+  .showreel-note { font-size: 13px; padding: 0 20px; }
   .drag-hint { font-size: 12px; }
   .reel-track { gap: 14px; padding: 14px 20px; }
   .reel-track img { height: clamp(160px, 30vh, 240px); }
@@ -1462,7 +1500,7 @@ img { display: block; max-width: 100%; }
   .track-list { padding: 0; margin-top: 28px; }
   .track-row { grid-template-columns: 24px 1fr auto auto; gap: 8px; padding: 14px 0; }
   .track-num { font-size: 7.7px; letter-spacing: 1px; }
-  .track-title { font-size: 10.7px; }
+  .track-title { font-size: 12.7px; }
   .track-time-lab { font-size: 10.7px; letter-spacing: 1px; }
   .track-play { width: 30px; height: 30px; }
   .track-play-ic svg { width: 10px; height: 10px; }

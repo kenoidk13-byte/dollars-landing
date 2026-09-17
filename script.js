@@ -458,24 +458,34 @@ dolls.forEach((el) => {
   el.addEventListener('pointerleave', () => el.classList.remove('hovering'));
 });
 
-/* ============ mobile nav: burger opens the dropdown menu ============ */
+/* ============ mobile nav: fullscreen burger menu ============ */
 const navBurger = $('#navBurger');
+const navClose = $('#navClose');
+function setNavOpen(open) {
+  const n = $('.nav');
+  if (!n) return;
+  n.classList.toggle('nav-open', open);
+  if (navBurger) navBurger.setAttribute('aria-expanded', String(open));
+  if (navClose) navClose.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+}
 if (navBurger) {
   navBurger.addEventListener('click', () => {
     const n = $('.nav');
-    if (!n) return;
-    const open = n.classList.toggle('nav-open');
-    navBurger.setAttribute('aria-expanded', String(open));
+    setNavOpen(!(n && n.classList.contains('nav-open')));
   });
+}
+if (navClose) {
+  navClose.addEventListener('click', () => setNavOpen(false));
 }
 const navLinksDrop = $('.nav-links');
 if (navLinksDrop) {
   navLinksDrop.addEventListener('click', (e) => {
-    if (e.target.closest('a') && $('.nav')) {
-      const n = $('.nav');
-      n.classList.remove('nav-open');
-      if (navBurger) navBurger.setAttribute('aria-expanded', 'false');
-    }
+    if (e.target.closest('a')) setNavOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setNavOpen(false);
   });
 }
 
