@@ -1251,6 +1251,34 @@ img { display: block; max-width: 100%; }
 .lightbox-next { right: 22px; top: 50%; transform: translateY(-50%); font-size: 24px; }
 .lightbox-nav:hover { transform: translateY(-50%) scale(1.05); color: var(--rust); border-color: var(--rust); }
 .lightbox-close:hover { transform: rotate(45deg) scale(1.05); color: var(--rust); border-color: var(--rust); }
+@media (min-width: 901px) {
+  .lightbox-close {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 0;
+  }
+  .lightbox-close .lb-glyph { display: none; }
+  .lightbox-close .lb-bar {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--rust);
+    border-radius: 2px;
+    transform-origin: center;
+  }
+  .lightbox-close .lb-a { transform: translateY(-50%) rotate(45deg); }
+  .lightbox-close .lb-b { transform: translateY(-50%) rotate(-45deg); }
+  .lightbox-close:hover { transform: none; border-color: transparent; }
+  .lightbox-close:hover .lb-bar { background: var(--rust); }
+}
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 /* ==================== TRACKS ==================== */

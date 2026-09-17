@@ -137,7 +137,7 @@ const BG_LEN_MULT = 3;
 const mobileInit = window.innerWidth <= 720;
 const bgCount = mobileInit
   ? Math.min(80, Math.max(50, Math.round(threadCount * 1.2)))
-  : Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
+  : Math.min(420, Math.max(220, Math.round(threadCount * 3.4)));
 const bgSpacing = window.innerWidth / (bgCount + 1);
 for (let i = 1; i <= bgCount; i++) {
   const x = bgSpacing * (i + 0.25);
@@ -1021,13 +1021,20 @@ if (typeof IntersectionObserver === 'function') {
 (function () {
   if (typeof Lenis === 'undefined') return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* desktop only: snappier glide + more distance per wheel tick (mobile keeps 0.09 / 1) */
+  const fastDesk = () => !reduce && window.innerWidth > 900;
   const lenis = new Lenis({
-    lerp: reduce ? 1 : 0.09,
-    wheelMultiplier: 1,
+    lerp: reduce ? 1 : (fastDesk() ? 0.11 : 0.09),
+    wheelMultiplier: fastDesk() ? 1.25 : 1,
     smoothWheel: !reduce,
     syncTouch: false
   });
   window.lenis = lenis;
+  window.addEventListener('resize', () => {
+    if (reduce) return;
+    lenis.options.lerp = fastDesk() ? 0.11 : 0.09;
+    lenis.options.wheelMultiplier = fastDesk() ? 1.25 : 1;
+  });
   function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
