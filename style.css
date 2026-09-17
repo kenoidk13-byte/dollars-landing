@@ -1371,7 +1371,7 @@ img { display: block; max-width: 100%; }
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
   .doll-sway, .doll-stage { min-width: 0; }
   .doll[data-doll="rusty"] .doll-sway { transform: translateX(-25px); }
-  .doll-sway img { height: min(103vh, 835px); max-width: 100%; filter: none; }
+  .doll-sway img { height: min(78vh, 620px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: clamp(22px, 5.5vw, 36px); }
   .doll-title { font-size: 14px; }
@@ -1394,8 +1394,8 @@ img { display: block; max-width: 100%; }
   .footer-sway { font-size: 10px; }
 }
 
-/* — iPhone SE / 375px — */
-@media (max-width: 375px) {
+/* — phones up to 430px (iPhone 16 / SE / small Android) — */
+@media (max-width: 430px) {
   .hero { padding: 80px 20px 50px; }
   .hero-tag { font-size: 18px; margin-top: 16px; }
   .hero-sub { font-size: 12px; max-width: 100%; }
@@ -1410,9 +1410,9 @@ img { display: block; max-width: 100%; }
 
   .tracks-btn { width: 220px; }
 
-  .dolls-heading { font-size: 36px; }
-  .doll { padding: 30px 20px 8px; gap: clamp(13px, 3.3vw, 47px); }
-  .doll:first-of-type { padding-top: 20px; }
+  .dolls-heading { font-size: 34px; }
+  .doll { padding: 24px 20px 6px; gap: clamp(13px, 3.3vw, 40px); }
+  .doll:first-of-type { padding-top: 16px; }
   .doll-card { padding-top: 0; }
   .doll-sway,
   .doll-stage,
@@ -1423,7 +1423,7 @@ img { display: block; max-width: 100%; }
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
   .doll-sway, .doll-stage { min-width: 0; }
   .doll[data-doll="rusty"] .doll-sway { transform: translateX(-25px); }
-  .doll-sway img { height: min(72vh, 504px); max-width: 100%; filter: none; }
+  .doll-sway img { height: min(64vh, 440px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: 20px; letter-spacing: 1px; }
   .doll-role { font-size: 9px; letter-spacing: 3px; margin-bottom: 10px; }
