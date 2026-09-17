@@ -134,7 +134,10 @@ for (let i = 1; i <= threadCount; i++) {
 /* faint background layer — the same threads, 3x longer, barely visible */
 const bgThreads = [];
 const BG_LEN_MULT = 3;
-const bgCount = Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
+const mobileInit = window.innerWidth <= 720;
+const bgCount = mobileInit
+  ? Math.min(80, Math.max(50, Math.round(threadCount * 1.2)))
+  : Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
 const bgSpacing = window.innerWidth / (bgCount + 1);
 for (let i = 1; i <= bgCount; i++) {
   const x = bgSpacing * (i + 0.25);
@@ -290,14 +293,22 @@ function render(t) {
   NOW = t;
   const dt = Math.min(1.6, Math.max(0.3, (t - last) / 16.667));
   last = t;
-  for (const th of bgThreads) updateThread(th, dt);
-  for (const th of bgThreads) drawThread(th, true);
-  if (!isMobile) {
+  if (isMobile) {
+    /* mobile: draw the faint layer at half rate to protect weak GPUs */
+    frameAcc = (frameAcc + 1) % 2;
+    if (frameAcc === 0) {
+      for (const th of bgThreads) updateThread(th, dt);
+      for (const th of bgThreads) drawThread(th, true);
+    }
+  } else {
+    for (const th of bgThreads) updateThread(th, dt);
+    for (const th of bgThreads) drawThread(th, true);
     for (const th of threads) updateThread(th, dt);
     for (const th of threads) drawThread(th, false);
   }
 }
 let last = performance.now();
+let frameAcc = 0;
 rafId = requestAnimationFrame(render);
 
 window.addEventListener('pointermove', (e) => {
@@ -342,9 +353,13 @@ $$('[data-scramble]').forEach((el) => {
 
 /* ============ 3D tilt ============ */
 /* driven on window so it also works on pointer-events:none
-   decorative buttons (big faint circles) without stealing clicks */
+   decorative buttons (big faint circles) without stealing clicks.
+   Skipped on touch-only devices — it fights the float animation and
+   recomputes inline transforms while the user scrolls on Android. */
 const tiltables = $$('[data-tilt]');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 function tiltHandler(e) {
+  if (finePointer && !finePointer.matches) return;
   for (const el of tiltables) {
     const r = el.getBoundingClientRect();
     if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
@@ -441,6 +456,76 @@ function scheduleScroll() {
 dolls.forEach((el) => {
   el.addEventListener('pointerenter', () => el.classList.add('hovering'));
   el.addEventListener('pointerleave', () => el.classList.remove('hovering'));
+});
+
+/* ============ mobile nav: fullscreen burger menu ============ */
+const navBurger = $('#navBurger');
+const navClose = $('#navClose');
+function setNavOpen(open) {
+  const n = $('.nav');
+  if (!n) return;
+  n.classList.toggle('nav-open', open);
+  if (navBurger) navBurger.setAttribute('aria-expanded', String(open));
+  if (navClose) navClose.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+}
+if (navBurger) {
+  navBurger.addEventListener('click', () => {
+    const n = $('.nav');
+    setNavOpen(!(n && n.classList.contains('nav-open')));
+  });
+}
+if (navClose) {
+  navClose.addEventListener('click', () => setNavOpen(false));
+}
+const navLinksDrop = $('.nav-links');
+if (navLinksDrop) {
+  navLinksDrop.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setNavOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setNavOpen(false);
+  });
+}
+
+/* ============ doll info modal ============ */
+function openDollModal(name) {
+  const m = $('#dollModal-' + name);
+  if (!m) return;
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  if (window.lenis) window.lenis.stop();
+}
+function closeDollModal() {
+  $$('.doll-modal').forEach(m => m.classList.remove('open'));
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+  if (window.lenis) window.lenis.start();
+}
+$$('.doll-more[data-doll-modal]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openDollModal(btn.dataset.dollModal);
+  });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openDollModal(btn.dataset.dollModal);
+    }
+  });
+});
+$$('.doll-modal-close').forEach(btn => {
+  btn.addEventListener('click', () => closeDollModal());
+});
+$$('.doll-modal').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if (e.target === m) closeDollModal();
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeDollModal();
 });
 
 /* ============ doll ember particles ============ */

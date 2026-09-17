@@ -496,11 +496,13 @@ function openDollModal(name) {
   m.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
+  if (window.lenis) window.lenis.stop();
 }
 function closeDollModal() {
   $$('.doll-modal').forEach(m => m.classList.remove('open'));
   document.body.style.overflow = '';
   document.documentElement.style.overflow = '';
+  if (window.lenis) window.lenis.start();
 }
 $$('.doll-more[data-doll-modal]').forEach(btn => {
   btn.addEventListener('click', (e) => {

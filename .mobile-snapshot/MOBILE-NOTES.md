@@ -49,20 +49,39 @@
 - У всех 4 персонажей описание — **один сплошной `<p class="doll-bio">`** (переносы строк внутри абзаца, без разделения на два `<p>`). Образец — Melvin.
 - Внизу каждой карточки приписка `.doll-scrawl` с пунктиром сверху.
 
-## Модальные окна «MORE INFORMATION» (мелвин / rusty / pulse)
+## Модальные окна «MORE INFORMATION» (все 4 персонажа)
 - Кнопка `.doll-more` под персонажем открывает полноэкранное окошко в стиле мобильного меню.
+- Работают у всех: **melvin / rusty / voice / pulse** (The Voice использует текст текущего био карточки — отдельного длинного текста пока нет).
+- **CSS `.doll-modal*` теперь ГЛОБАЛЬНЫЙ (не только ≤900px) — модалки работают и на десктопе.**
+  Скрыты по умолчанию (`display:none`), показываются по `.open`.
 - **Модалки лежат в самом конце `<body>`** (вне `.doll`/секций!), иначе `z-index:400` не перекрывает
   `nav` (`z-index:300`) — `.doll` создаёт свой stacking context, и крестик не кликается.
-- HTML: `#dollModal-melvin`, `#dollModal-rusty`, `#dollModal-pulse`.
-- Структура: `.doll-modal > .doll-modal-close (X) + .doll-modal-box > .doll-role + h3 + .doll-title + .doll-modal-body + .doll-scrawl`.
-- CSS (только ≤900px): `.doll-modal { display:none; fixed; rgba(11,10,8,.97); blur(12px); z-index:400; overflow-y:auto }`,
+- HTML: `#dollModal-melvin`, `#dollModal-rusty`, `#dollModal-voice`, `#dollModal-pulse`.
+- Структура: `.doll-modal > .doll-modal-close (X) + .doll-modal-box > .doll-modal-body > figure.doll-bio-photo + .doll-bio-text`
+  (внутри `.doll-bio-text`: `.doll-role` + `h3` + `.doll-title` + `<p>` + `.doll-scrawl`).
+  CSS `.doll-modal*` — ГЛОБАЛЬНЫЙ (не в медиазапросе), на десктопе скрыт `display:none` до `.open`.
+- CSS: `.doll-modal { display:none; fixed; rgba(11,10,8,.97); blur(12px); z-index:400; overflow-y:auto }`,
   `.doll-modal.open { display:block }`, `.doll-modal-close { position:fixed; top:22px; right:22px; rust X }`,
-  `.doll-modal-box { flex column center; min-height:100vh; padding:90px 24px 60px; text-align:center }`,
-  `h3 clamp(26px,5.5vw,40px)`, `.doll-title 18px`, `.doll-modal-body { 15px/1.85; muted; max-width:480px; text-align:left }`,
+  `.doll-modal-box { flex column center; min-height:100vh; padding:90px 24px 60px }`,
+  `h3 clamp(26px,5.5vw,40px)`, `.doll-title 18px`,
+  `.doll-bio-text > p:not(.doll-role) { margin-top:24px; text-align:justify; text-wrap:wrap; hyphens:auto }`
+  (обязательно — глобальное `:where(...p...)` на стр.484 ставит `center`+`balance`, перебивает наследование),
   `.doll-modal-box .doll-scrawl { margin-top:28px; padding-top:14px; font-size:15px }`.
+- ≤900: `.doll-modal-box { text-align:center; align-items:center }`, `.doll-modal-body { flex-direction:column; align-items:center; gap:0 }`,
+  `.doll-bio-text { display:contents }` → role/h3/title/фото/текст/скролл = flex-элементы body, порядок через `order`
+  (role −3, h3 −2, title −1): имя → ник → приписка → фото → текст → скролл. Фото `max-width:300px; margin:22px 0`, по центру;
+  роль/h3/титул/скролл `center`, абзац био остаётся `justify`. h3/role/title внутри `.doll-bio-text` → нужен явный
+  `line-height` (иначе наследуют 1.85 от bio-text): `h3 1.25`, `.doll-role 1.3`, `.doll-title 1.5`.
 - JS (`script.js`, секция "doll info modal"): `openDollModal(name)` / `closeDollModal()`, блокировка
   `body`/`html` `overflow:hidden`, закрытие по X, Escape, клику по фону, Enter/Space на кнопке.
-- Полные тексты в модалках: Melvin — 3 абзаца; Rusty — 6 абзацев; Stacy — 10 абзацев.
+- **Скролл только внутри окна**: у каждого `.doll-modal` есть атрибут `data-lenis-prevent` — иначе Lenis
+  перехватывает wheel и текст в окне не скроллится. Плюс `window.lenis.stop()` при открытии и `.start()`
+  при закрытии — фон не двигается.
+- Полные тексты в модалках: Melvin/Stacy/Voice — по одному сплошному абзацу; Voice = полная история Kyle / Loki (2080 симв.).
+  **Rusty — 4 абзаца** (новый текст 2026-09-17; финал — «…He became Rusty.», абзац про ночь/радио/AC-DC удалён,
+  как и складской бас/DollarS). Абзацы: 24px между на десктопе, на мобиле 0 у первого (зазор даёт `margin:22px 0`
+  фото) и 18px между последующими — `.doll-bio-text > p:not(.doll-role) + p { margin-top:18px }` в `@media ≤900`
+  (без него правило `margin-top:0` перебивает `p + p` по специфичности и абзацы слипаются).
 - **The Voice (вокалист)** — кнопка пока без модалки (`data-doll-modal` не задан), но уже
   `role="button" tabindex="0"` и без `href` (клик ничего не открывает; ждём текст).
 
@@ -91,14 +110,29 @@
 - Подключены через `<picture><source media="(max-width:900px)" srcset="mobile/X.webp">`; десктоп берёт оригиналы.
 
 ## Бейстеры кеша
-- Актуальные: `style.css?v=474`, `script.js?v=438` (в `index.html`).
+- Актуальные: `style.css?v=488`, `script.js?v=440` (в `index.html`).
 - Перед каждым пушем поднимать на +1.
+
+## Фото персонажей в модалках (2026-09-17)
+- В каждую модалку добавлено фото: `bio/bio-guitar.jpg` / `bio-bass.jpg` / `bio-dram.jpg` /
+  `bio-vocal.jpg` (760×1361, jpg q82).
+- ≤900px раскладка столбиком: `.doll-modal-body { flex-direction: column; align-items:center; gap: 0 }`,
+  `.doll-bio-text { display: contents }` + `order` (role −3, h3 −2, title −1) → имя → ник → приписка → фото → текст → скролл.
+  `.doll-bio-photo { align-self:center; width:100%; max-width:300px; margin:22px 0 }`, `img { width:100%; height:auto }`
+  → фото 300px по центру (390px: фото 300×537), текст ниже на всю ширину (342px).
+- По центру (как на странице/карточках): `.doll-modal-box h3`, `.doll-role`, `.doll-title`, `.doll-scrawl`
+  → `text-align: center` (сам `.doll-modal-box` тоже `text-align:center`, `align-items:center`).
+  Абзац основного текста (`.doll-bio-text > p:not(.doll-role)`) остаётся `justify`.
+- >900px — фото слева (одно, x=170, 374×670, вровень с ролью), имя/ник/приписка в правом столбце НАД текстом
+  (x=578), скролл под текстом (см. DESKTOP-NOTES).
 
 ## Тестирование (headless)
 - `puppeteer-core` установлен в `/tmp` (`npm install --no-save` в `/tmp`), Chrome:
   `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`.
 - Скрипты: `/tmp/navtest*.js` (меню), `/tmp/modaltest.js` (Melvin), `/tmp/rustytest.js`, `/tmp/pulsetest.js`,
-  `/tmp/notest.js` (проверка «нет прыжка к Melvin»), `/tmp/mailtest2.js` (почта vs футер).
+  `/tmp/notest.js` (проверка «нет прыжка к Melvin»), `/tmp/mailtest2.js` (почта vs футер),
+  `/tmp/lay3.js` (замеры 4 модалок на 1440), `/tmp/mob3.js` (порядок/выравнивания на 390/430/720),
+  `/tmp/mob4.js` (центры элементов на 390).
 - Прелоадер перекрывает клики в headless — ждать его скрытия перед кликом.
 - Модель без vision: скриншоты не читаются, проверяем через `getComputedStyle`/`getBoundingClientRect`.
 

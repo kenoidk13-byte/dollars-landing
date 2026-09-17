@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800;900&family=Inter+Tight:wght@300;400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=451">
+<link rel="stylesheet" href="style.css?v=488">
 <meta name="probe" content="boot" />
 </head>
 <body>
@@ -26,13 +26,17 @@
 
 <header class="nav">
   <a class="nav-logo" href="#top"><img src="Logo.webp?v=401" alt="Dollars"></a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   <nav class="nav-links">
     <a href="#manifesto">Manifesto</a>
     <a href="#dolls">The band</a>
     <a href="#showreel">Gallery</a>
     <a href="#tracks">Tracks</a>
+    <button class="nav-close" id="navClose" aria-label="Close menu" aria-expanded="false"><span></span><span></span></button>
+    <span class="nav-mail">E-mail: <a href="mailto:Kenoidk13@gmail.com">Kenoidk13@gmail.com</a></span>
   </nav>
   <span class="nav-eq" id="navEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+  <span class="nav-mini" aria-hidden="true"><img src="Logo.webp?v=401" alt="Dollars"></span>
 </header>
 
 <main id="top">
@@ -79,7 +83,7 @@
         We are the cursed who have stopped being afraid.
       </p>
     </div>
-    <div class="manifesto-sign reveal" style="--d:.24s">— you know your worth. Now sing it.</div>
+    <div class="manifesto-sign reveal" style="--d:.24s">— you know your worth.<br>Now sing it.</div>
   </section>
 
   <section class="dolls" id="dolls">
@@ -89,7 +93,7 @@
     <article class="doll" data-doll="melvin">
       <div class="doll-stage reveal">
         <span class="doll-sway">
-          <img src="guitar2_pad.webp" alt="Melvin — the Hanged" data-tilt loading="lazy" decoding="async">
+          <picture><source media="(max-width:900px)" srcset="mobile/guitar2_pad.webp"><img src="guitar2_pad.webp" alt="Melvin — the Hanged" data-tilt loading="lazy" decoding="async"></picture>
           <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
@@ -101,14 +105,15 @@
           He was once a human being — a talented guitarist who played in underground bands. But his talent was poisoned by arrogance. For the sake of a contract, fame, and money, he betrayed his band and abandoned his family; he trampled on those who loved him and sold out his friends. He lived by the principle that only he mattered. He believed music was his ticket to immortality and that people were merely tools to achieve his ends.
         </p>
         <span class="doll-scrawl">His talent was poisoned by pride.</span>
-        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
+        <a class="doll-more" role="button" tabindex="0" data-doll-modal="melvin"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
+
 
     <article class="doll" data-doll="rusty">
       <div class="doll-stage reveal" style="--d:.05s">
         <span class="doll-sway">
-          <img src="bass.webp" alt="Rusty — the Ashed" data-tilt loading="lazy" decoding="async">
+          <picture><source media="(max-width:900px)" srcset="mobile/bass.webp"><img src="bass.webp" alt="Rusty — the Ashed" data-tilt loading="lazy" decoding="async"></picture>
           <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
@@ -118,48 +123,44 @@
         <span class="doll-title">“Rusty”</span>
         <p class="doll-bio">
           He was never a person. He's a hand-sewn rag doll — burlap skin, one
-          button eye, a black-thread cross for the other. A boy called him his
-          best friend and dreamed they'd grow up to be rock stars together.
-        </p>
-        <p class="doll-bio">
-          The boy grew up. The box went to the attic. The house burned down.
-          Everything turned to ash — except Rusty. Some fires make you softer.
-          His made him louder.
+button eye, a black-thread cross for the other. A boy called him his
+best friend and dreamed they'd grow up to be rock stars together.
+The boy grew up. The box went to the attic. The house burned down.
+Everything turned to ash — except Rusty. Some fires make you softer.
+His made him louder.
         </p>
         <span class="doll-scrawl">Tempered in the flames, the spirit is forged.</span>
-        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
+        <a class="doll-more" role="button" tabindex="0" data-doll-modal="rusty"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
 
     <article class="doll" data-doll="voice">
       <div class="doll-stage reveal" style="--d:.1s">
         <span class="doll-sway">
-          <img src="vocal.webp" alt="The Voice — face of Dollars" data-tilt loading="lazy" decoding="async">
+          <picture><source media="(max-width:900px)" srcset="mobile/vocal.webp"><img src="vocal.webp" alt="The Voice — face of Dollars" data-tilt loading="lazy" decoding="async"></picture>
           <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
       <div class="doll-card reveal" style="--d:.18s">
         <p class="doll-role">vocal · the face</p>
-        <h3 data-scramble>THE VOICE</h3>
-        <span class="doll-title">“Dollars' Second Name”</span>
-        <p class="doll-bio">
+        <h3 data-scramble>Kyle&amp;Loki</h3>
+        <span class="doll-title">“Echo”</span>
+<p class="doll-bio">
           A voice that runs from a whisper to a scream without asking
-          permission. The room goes quiet when he touches the mic. The room
-          goes deaf when he lets go.
-        </p>
-        <p class="doll-bio">
-          Every song is a confession. Every show is a rebirth. Fans know him
-          from the very first note. Dollars isn't just the band.
+permission. The room goes quiet when he touches the mic. The room
+goes deaf when he lets go. Every song is a confession. Every show is
+a rebirth. Fans know him from the very first note. Dollars isn't
+just the band.
         </p>
         <span class="doll-scrawl">first note. last bite.</span>
-        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
+        <a class="doll-more" role="button" tabindex="0" data-doll-modal="voice"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
 
     <article class="doll" data-doll="pulse">
       <div class="doll-stage reveal" style="--d:.15s">
         <span class="doll-sway">
-          <img src="dram2.webp" alt="The Pulse — drummer of Dollars" data-tilt loading="lazy" decoding="async">
+          <picture><source media="(max-width:900px)" srcset="mobile/dram2.webp"><img src="dram2.webp" alt="The Pulse — drummer of Dollars" data-tilt loading="lazy" decoding="async"></picture>
           <canvas class="doll-fx" width="680" height="940"></canvas>
         </span>
       </div>
@@ -173,8 +174,6 @@
           flustered Director in a drab, stuffy office. Whenever the Director
           faced looming deadlines, collapsing workflows, or simply didn't know
           what to do, he would stick pins into her.
-        </p>
-        <p class="doll-bio">
           She silently absorbed the folly, chaos, and hysterics of others. Her
           mouth was stitched shut with coarse thread so she could not speak.
           And she endured. Inside her canvas body beat a titanium metronome.
@@ -182,7 +181,7 @@
           shambles.
         </p>
         <span class="doll-scrawl">listen for the heartbeat in the breakdown</span>
-        <a class="doll-more" href="#dolls"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
+        <a class="doll-more" role="button" tabindex="0" data-doll-modal="pulse"><span class="doll-more-main" data-scramble="MORE INFORMATION">MORE INFORMATION</span></a>
       </div>
     </article>
   </section>
@@ -246,7 +245,80 @@
   </div>
 </div>
 
+<div class="doll-modal" data-lenis-prevent id="dollModal-melvin" role="dialog" aria-modal="true" aria-label="MELVIN">
+  <button class="doll-modal-close" aria-label="Close"><span></span><span></span></button>
+  <div class="doll-modal-box">
+    <div class="doll-modal-body">
+      <figure class="doll-bio-photo"><img src="bio/bio-guitar.jpg" alt="Melvin" loading="lazy" width="760" height="1361"></figure>
+      <div class="doll-bio-text">
+        <p class="doll-role">Six-seven string · power</p>
+        <h3>MELVIN</h3>
+        <span class="doll-title">“The Hanged”</span>
+      <p>
+        He was once a man—a talented guitarist who played in underground bands. But his talent was poisoned by hubris. For the sake of a contract, fame, and money, he betrayed his band and abandoned his family; he trampled on those who loved him and sold out his friends. He lived by the credo that only he mattered. He believed music was his ticket to immortality and that people were merely tools to achieve his ends. He lived his life all wrong: instead of building anything, he destroyed everything around him. He died alone. Despite achieving outward success, he ended up solitary in an empty room, hollowed out by alcohol and drugs. The noose around his neck is not merely a stylistic detail; it is an echo of his actual death. He hanged himself when he realized his "great life" was worthless. Yet the heavens would not accept him—his soul, burdened by sin, was too heavy. Nor did Hell want to take in someone who managed to sow chaos even there for his own gain. This is no doll. This is a man gazing at the world through holes in the burlap, begging for forgiveness but receiving only the echo of his own fatal mistakes.
+      </p>
+      <span class="doll-scrawl">His talent was poisoned by pride.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doll-modal" data-lenis-prevent id="dollModal-rusty" role="dialog" aria-modal="true" aria-label="NEIL">
+  <button class="doll-modal-close" aria-label="Close"><span></span><span></span></button>
+  <div class="doll-modal-box">
+    <div class="doll-modal-body">
+      <figure class="doll-bio-photo"><img src="bio/bio-bass.jpg" alt="Rusty" loading="lazy" width="760" height="1361"></figure>
+      <div class="doll-bio-text">
+        <p class="doll-role">five string · the favorite doll</p>
+        <h3>Neil</h3>
+        <span class="doll-title">“Rusty”</span>
+                  <p>Long ago—many years ago—Rusty wasn’t a rock star. He was just an ordinary rag doll, hand-sewn from burlap, with a button for one eye and a black-thread cross for the other. An old woman living on the edge of town had stitched him for her son. The boy named him Rusty—both for the fabric’s reddish-brown hue and because the doll was soft and warm, like rye bread.</p>
+      <p>Rusty was a beloved doll. The boy was inseparable from him: he took him to bed, sat him at the dinner table, and carried him to school in his backpack. Rusty knew all his secrets and heard all his dreams. The boy dreamed of becoming a rock musician and often "played" in a band with Rusty—setting him up in front of the mirror and imagining him playing the bass.</p>
+      <p>But then, disaster struck. The boy grew up. He became a teenager, then an adult. The doll was left behind in the old house—up in the attic, in a box amidst dusty belongings. Then came the tragedy: a fire. The house burned down. Everything inside turned to ash. Rusty was scorched and soaked in smoke; his fabric hardened, and the metal parts—once buttons and rivets—rusted over.</p>
+      <p>When the ruins were being cleared, Rusty was found among the debris—charred, yet intact. Someone meant to throw him away but changed their mind at the last moment and left him at the dump instead. There, amidst old junk, rusty pipes, and broken appliances, Rusty lay for years. Rain, snow, and sun—all of it became ingrained in his burlap. He became Rusty.</p>
+      <span class="doll-scrawl">Tempered in the flames, the spirit is forged.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doll-modal" data-lenis-prevent id="dollModal-pulse" role="dialog" aria-modal="true" aria-label="STACY">
+  <button class="doll-modal-close" aria-label="Close"><span></span><span></span></button>
+  <div class="doll-modal-box">
+    <div class="doll-modal-body">
+      <figure class="doll-bio-photo"><img src="bio/bio-dram.jpg" alt="Stacy" loading="lazy" width="760" height="1361"></figure>
+      <div class="doll-bio-text">
+        <p class="doll-role">drums · the heartbeat</p>
+        <h3>STACY</h3>
+        <span class="doll-title">“The Tempo”</span>
+      <p>
+        She was neither a human nor a beloved childhood toy. Created as an anti-stress voodoo doll, she sat on the desk of a perpetually flustered Director in a drab, stuffy office. Whenever deadlines loomed, workflows collapsed, or he simply didn't know what to do, he would stick pins into her. She silently absorbed the folly, chaos, and hysterics of others. Her mouth was stitched shut with coarse thread so she couldn't speak. And she endured it. Inside her canvas body beat a titanium metronome. She loved System and Rhythm, yet chaos reigned all around her. It all came to an end one day. The Director called a meeting to resolve a crucial issue and suggested, "How about we settle this with Rock-Paper-Scissors?" The chaos had crossed the line. Her single button eye glinted menacingly. She pulled out all the pins—leaving scars on her tights and body—and simply walked out of the office in silence. Her lips were frozen forever in a signature, icy, sarcastic half-smile. Stacy wandered the streets for a long time, searching for a place where the right rhythm prevailed. One day, she stumbled upon a basement where a band was rehearsing. She sat silently behind the drum kit and struck the snare drum. The strike was swift, precise, and cold-blooded. Stacy doesn't sing or give interviews. She simply sits at the back and holds the rhythm. Don't even try playing off-key around this lady, or a drumstick might come flying straight at your forehead.
+      </p>
+      <span class="doll-scrawl">listen for the heartbeat in the breakdown</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doll-modal" data-lenis-prevent id="dollModal-voice" role="dialog" aria-modal="true" aria-label="Kyle &amp; Loki">
+  <button class="doll-modal-close" aria-label="Close"><span></span><span></span></button>
+  <div class="doll-modal-box">
+    <div class="doll-modal-body">
+      <figure class="doll-bio-photo"><img src="bio/bio-vocal.jpg" alt="Kyle & Loki" loading="lazy" width="760" height="1361"></figure>
+      <div class="doll-bio-text">
+        <p class="doll-role">vocal · the face</p>
+        <h3>Kyle&amp;Loki</h3>
+        <span class="doll-title">“Echo”</span>
+      <p>
+        Long ago, Kyle was an ordinary rag doll with a clear, melodic voice. He had been the favorite toy of a boy who dreamed of the rock stage, but the boy grew up, and the doll was lost during a move. Kyle was found by a bitter, plain-looking girl. She decided to remake him: she pulled a shapeless lump of fabric from the trash and crudely, crookedly stitched on a second head—an ugly, eyeless, mouthless thing that dangled beside the first. Dissatisfied with the result, she hurled the doll into a storm drain in a fit of rage. Kyle awoke in pitch darkness. Then, the second head began to stir. As it descended through winding pipes amidst the flow of filth, it could not see, yet it could scream. Its piercing shriek echoed off the concrete walls, becoming distorted and heavy with menace. Thus, Loki was born. While Kyle’s voice remained bright and melodic, Loki acquired a heavy, low growl—the roar of a wounded beast, the voice of the abyss itself. They eventually found themselves at a junkyard, where an old radio suddenly blasted the riff from "Back in Black." Kyle remembered the boy’s dream of the rock stage, while Loki yearned to unleash his fury. They are two sides of the same coin, two souls trapped in a single, battered body. Kyle represents melody, soul, and beauty; Loki embodies chaos, rage, and raw power. When the drums kick in and the guitars roar, a battle erupts between them. Loki surges forward, drowning everything out with his guttural growl. But Kyle rises to meet the challenge, soaring above the roar with a pure, piercing scream. They clash right there on stage, vying to prove to the audience which of them is the ultimate badass. They can sing in turn or blend into unison, creating an incredible symbiosis of melody and noise. It is precisely this internal war between the two heads that forms the foundation of their art. Their best songs are born from their arguments. They are DollarS. A voice that travels from a whisper to a scream. When Kyle touches the microphone, the room falls silent. And when Loki lets loose, the room is deafened.
+      </p>
+      <span class="doll-scrawl">first note. last bite.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="lenis.min.js"></script>
-<script src="script.js?v=434"></script>
+<script src="script.js?v=440"></script>
 </body>
 </html>

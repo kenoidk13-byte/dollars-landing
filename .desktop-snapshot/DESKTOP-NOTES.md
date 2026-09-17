@@ -44,3 +44,41 @@
 ## Зафиксированные десктопные значения трек-листа (2026-09-17)
 - `.track-title` font-size: `clamp(13.5px, 1.8vw, 16.4px)` (2 раза уменьшали по 1pt: было 19px)
 - `.track-row` padding: `19.8px 14px` (вертикальный шаг строк -10%, было 22px)
+
+## Осознанные изменения десктопа (2026-09-17)
+- **Модальные окна «MORE INFORMATION» теперь работают и на десктопе** (по просьбе заказчика).
+  CSS `.doll-modal*` вынесен из `@media (max-width:900px)` в глобальные стили — на десктопе
+  он скрыт по умолчанию (`display:none`) и показывается по `.open`. В остальном десктопный вид не менялся.
+- Ширина колонки модалки: `.doll-modal-box > * { max-width: 1100px }` (фото 374 + gap 34 + текст 692 при 1440),
+  текст — `text-align: left`. Абзац био: `.doll-bio-text > p:not(.doll-role) { text-align: justify; text-wrap: wrap; hyphens: auto }`
+  (глобальное `:where(...p...)` на стр.484 даёт `center`+`balance`).
+- Скролл окна: у `.doll-modal` атрибут `data-lenis-prevent` + `window.lenis.stop()/start()` — скроллится
+  только текст внутри окна, фон зафиксирован.
+- Модалки всех 4 персонажей (melvin / rusty / voice / pulse) лежат в конце `<body>` (z-index 400 > nav 300).
+- The Voice: полный текст = текущий био карточки (отдельного длинного текста пока нет).
+- Тексты модалок: Melvin / Stacy / Voice — один сплошной абзац. Voice = история Kyle / Loki (заменён старый короткий текст).
+  **Rusty — 4 абзаца** (новый текст 2026-09-17: финал — «…He became Rusty.», убраны абзац про ночь/радио/AC-DC,
+  складской бас и DollarS). Абзацы: `margin-top:24px` между всеми (`.doll-modal-body p + p {14px}` перебит по специфичности).
+- Кнопки `.doll-more` без `href` — десктоп-скролл к `#dolls` у них убран (см. MOBILE-NOTES).
+
+## Фото персонажей в модалках (2026-09-17)
+- Файлы: `bio/bio-guitar.jpg` (Melvin), `bio/bio-bass.jpg` (Rusty), `bio/bio-dram.jpg` (Stacy/pulse),
+  `bio/bio-vocal.jpg` (Kyle&Loki). 760×1361, jpg q82 (исходники на Desktop были png/webp ~6 МБ → сжаты sips).
+- Разметка: `<div class="doll-modal-body">` → `<figure class="doll-bio-photo"><img …></figure>` +
+  `<div class="doll-bio-text">` → `.doll-role` + `h3` + `.doll-title` + `<p>…</p>` + `<span class="doll-scrawl">…</span></div>`.
+  Имя/ник/приписка-роль + текст + скролл — всё внутри `.doll-bio-text` (правый столбец).
+- Раскладка (>900): `.doll-modal-body` — flex row, `align-items: flex-start`, `gap: 34px`.
+  Фото `.doll-bio-photo { flex: 0 0 min(34%,380px); max-width: 380px }`, `img { width:100%; height:auto }`
+  → все фото 374×670 (пропорция 0.558 = исходная, без кропа/апскейла), слева в одиночестве.
+- Текст: `.doll-bio-text { flex: 1 1 auto; min-width: 0; font-size:15px; line-height:1.85; color: var(--muted) }`,
+  `.doll-bio-text > p:not(.doll-role) { margin-top:24px; text-align: justify; text-wrap: wrap; hyphens: auto }` — колонка 692px при 1440 (x=578).
+- Имя/ник/приписка — в правом столбце (x=578, w=692) НАД текстом, left. Зазоры: роль→имя 16 (role mb),
+  имя→ник 10 (title mt), ник→текст 24 (p mt). Картинка слева — одна, вровень с ролью по вертикали.
+- h3/role/title внутри `.doll-bio-text` → им нужен явный `line-height` (иначе наследуют 1.85):
+  `h3 { line-height:1.25 }`, `.doll-role { line-height:1.3 }`, `.doll-title { line-height:1.5 }`.
+- У шапки модалки НЕ должно быть `line-height` от `.doll-bio-text`; `h3` даёт h=50, role h=14, title h=27 при 1440.
+- Колонка модалки центрируется: `.doll-modal-box { align-items: center; justify-content: center }` +
+  `.doll-modal-box > * { width: 100%; max-width: 1100px }` → левый край на x=170 при 1440.
+- ≤900: `.doll-bio-text { display: contents }` → всё становится flex-элементами `.doll-modal-body` (column,
+  `align-items:center`, `gap:0`), порядок через `order`: role −3, h3 −2, title −1, 0 = фото → текст → скролл.
+  Фото по центру (`max-width:300px`, `margin:22px 0`), текст `justify`, остальное center.
