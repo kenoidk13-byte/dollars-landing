@@ -134,7 +134,10 @@ for (let i = 1; i <= threadCount; i++) {
 /* faint background layer — the same threads, 3x longer, barely visible */
 const bgThreads = [];
 const BG_LEN_MULT = 3;
-const bgCount = Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
+const mobileInit = window.innerWidth <= 720;
+const bgCount = mobileInit
+  ? Math.min(80, Math.max(50, Math.round(threadCount * 1.2)))
+  : Math.min(220, Math.max(130, Math.round(threadCount * 2.2)));
 const bgSpacing = window.innerWidth / (bgCount + 1);
 for (let i = 1; i <= bgCount; i++) {
   const x = bgSpacing * (i + 0.25);
@@ -290,14 +293,22 @@ function render(t) {
   NOW = t;
   const dt = Math.min(1.6, Math.max(0.3, (t - last) / 16.667));
   last = t;
-  for (const th of bgThreads) updateThread(th, dt);
-  for (const th of bgThreads) drawThread(th, true);
-  if (!isMobile) {
+  if (isMobile) {
+    /* mobile: draw the faint layer at half rate to protect weak GPUs */
+    frameAcc = (frameAcc + 1) % 2;
+    if (frameAcc === 0) {
+      for (const th of bgThreads) updateThread(th, dt);
+      for (const th of bgThreads) drawThread(th, true);
+    }
+  } else {
+    for (const th of bgThreads) updateThread(th, dt);
+    for (const th of bgThreads) drawThread(th, true);
     for (const th of threads) updateThread(th, dt);
     for (const th of threads) drawThread(th, false);
   }
 }
 let last = performance.now();
+let frameAcc = 0;
 rafId = requestAnimationFrame(render);
 
 window.addEventListener('pointermove', (e) => {
@@ -342,9 +353,13 @@ $$('[data-scramble]').forEach((el) => {
 
 /* ============ 3D tilt ============ */
 /* driven on window so it also works on pointer-events:none
-   decorative buttons (big faint circles) without stealing clicks */
+   decorative buttons (big faint circles) without stealing clicks.
+   Skipped on touch-only devices — it fights the float animation and
+   recomputes inline transforms while the user scrolls on Android. */
 const tiltables = $$('[data-tilt]');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 function tiltHandler(e) {
+  if (finePointer && !finePointer.matches) return;
   for (const el of tiltables) {
     const r = el.getBoundingClientRect();
     if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
@@ -430,7 +445,6 @@ function onScrollBatch() {
   scrollTicking = false;
   dollDriver();
   dollThreadDriver();
-  navScrollState();
 }
 function scheduleScroll() {
   if (!scrollTicking) {
@@ -444,29 +458,7 @@ dolls.forEach((el) => {
   el.addEventListener('pointerleave', () => el.classList.remove('hovering'));
 });
 
-/* ============ nav collapse to burger + mini logo on scroll ============ */
-const heroLogoRef = $('.hero-logo');
-function navScrollState() {
-  const n = $('.nav');
-  if (!n) return;
-  const y = window.scrollY;
-  const rise = Math.max(0, Math.min(1, y / (window.innerHeight * 0.45)));
-  /* mini logo (and burger) appear only after the hero logo has scrolled away */
-  const scrolled = rise >= 1;
-  n.classList.toggle('scrolled', scrolled);
-  /* big hero logo "rides up" out of the way as you scroll, mini logo takes over */
-  if (heroLogoRef) {
-    if (y > 4) {
-      heroLogoRef.style.animation = 'none';
-      heroLogoRef.style.translate = `0 ${(-y * 0.9).toFixed(1)}px`;
-      heroLogoRef.style.opacity = String(Math.max(0, 1 - rise));
-    } else {
-      heroLogoRef.style.animation = '';
-      heroLogoRef.style.translate = '';
-      heroLogoRef.style.opacity = '';
-    }
-  }
-}
+/* ============ mobile nav: burger opens the dropdown menu ============ */
 const navBurger = $('#navBurger');
 if (navBurger) {
   navBurger.addEventListener('click', () => {
