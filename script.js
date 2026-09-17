@@ -507,6 +507,12 @@ $$('.doll-more[data-doll-modal]').forEach(btn => {
     e.preventDefault();
     openDollModal(btn.dataset.dollModal);
   });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openDollModal(btn.dataset.dollModal);
+    }
+  });
 });
 $$('.doll-modal-close').forEach(btn => {
   btn.addEventListener('click', () => closeDollModal());
