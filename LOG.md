@@ -16,7 +16,7 @@ Live: https://kenoidk13-byte.github.io/dollars-landing/
 
 ## Текущее состояние (на 2026-09-17)
 
-- Коммит: `699d633` в `main` (будет запушен).
+- Коммит: `bde54fc` в `main` (запушен; предыд. `699d633`).
 - Бейстеры: `style.css?v=491`, `script.js?v=445`.
 - Desktop: модалки персонажей (фото слева, имя/ник/приписка в правом столбце над текстом), колонка текста модалки **800px** (тело 1214px), ники **26px**, манифест в одну строку, крестик галереи в стиле модалки, плотность фоновых ниток `bgCount` 420, Lenis `lerp 0.11` / `wheelMultiplier 1.25`.
 - Mobile: модалки (центрирование через `display:contents` + `order`), fullscreen-меню, треки left при ≤720, галерея — свайп пальцем + крестик в стиле меню; манифест, ники и ширина модалки — не тронуто (как baseline).
@@ -61,6 +61,12 @@ Live: https://kenoidk13-byte.github.io/dollars-landing/
   Pulse (Stacy) ~590 → ~370 символов. Био всех трёх = 182px (карточка 543px, как Rusty); Melvin 574/213.
 - Бейстеры: `style.css?v=490 → 491`, `script.js` не менялся (`445`).
 - Проверки: `/tmp/textwidth.js` (ширина/строки колонки модалки 1280/1440/1920), `/tmp/cardheight.js` (высоты карточек/био).
+
+### `bde54fc` — текст био Rusty в модалке (запушен)
+- 4 абзаца переформулированы: «Rusty wasn’t a rock star.» (без «Long ago—many years ago»), «sat him at the table»
+  (было «dinner table»), «And then came the tragedy» (было «Then»), «left him at the junkyard» (было «at the dump instead»),
+  «all of it weathered his burlap. He became truly Rusty.» (было «became ingrained… He became Rusty.»).
+- Только `index.html` (контент, десктоп+мобила), CSS/JS не менялись → бейстеры прежние (`491`/`445`); снапшоты синхронизированы.
 
 ---
 
