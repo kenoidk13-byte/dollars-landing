@@ -25,7 +25,6 @@
 <canvas id="threads"></canvas>
 
 <header class="nav">
-  <a class="nav-logo" href="#top"><img src="Logo.webp?v=401" alt="Dollars"></a>
   <nav class="nav-links">
     <a href="#manifesto">Manifesto</a>
     <a href="#dolls">The band</a>
@@ -218,6 +217,15 @@
       <span>scroll and explore</span>
       <button class="reel-nav-bottom reel-next-bottom" aria-label="Next">→</button>
     </div>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <button class="lightbox-nav lightbox-prev" aria-label="Previous">←</button>
+      <button class="lightbox-nav lightbox-next" aria-label="Next">→</button>
+      <div class="lightbox-stage">
+        <button class="lightbox-close" aria-label="Close">✕</button>
+        <img id="lightboxImg" src="" alt="Concert photograph">
+      </div>
+    </div>
   </section>
 
   <div class="footer-thread" aria-hidden="true"></div>
@@ -248,15 +256,6 @@
   </footer>
 
 </main>
-
-<div class="lightbox" id="lightbox" hidden>
-  <button class="lightbox-nav lightbox-prev" aria-label="Previous">←</button>
-  <button class="lightbox-nav lightbox-next" aria-label="Next">→</button>
-  <div class="lightbox-stage">
-    <button class="lightbox-close" aria-label="Close">✕</button>
-    <img id="lightboxImg" src="" alt="Concert photograph">
-  </div>
-</div>
 
 <script src="lenis.min.js"></script>
 <script src="script.js?v=433"></script>

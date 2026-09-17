@@ -136,18 +136,6 @@ img { display: block; max-width: 100%; }
   padding: 14px 34px;
   min-height: 69px;
 }
-.nav-logo {
-  position: absolute;
-  left: clamp(14px, 3vw, 34px);
-  top: 50%;
-  transform: translateY(calc(-50% + 10px));
-}
-.nav-logo img {
-  height: 49px;
-  width: auto;
-  display: block;
-  filter: contrast(1.22) saturate(1.12) brightness(1.12) drop-shadow(0 2px 6px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(216,168,78,.16));
-}
 
 .nav-eq {
   position: absolute;
@@ -244,8 +232,6 @@ img { display: block; max-width: 100%; }
   .hero-eq, .nav-eq { filter: none; }
   .doll-sway img, .doll-card img, .hero-logo { filter: none; }
   .doll-card, .manifesto { box-shadow: none; }
-  /* no hover glow behind characters + no ember particles on mobile */
-  .doll-fx { display: none; }
   .dolls-word { background-attachment: scroll; } /* kill iOS fixed-bg repaint each scroll */
   .thread-doll, .doll-soul { opacity: .9; }
 }
@@ -274,7 +260,6 @@ img { display: block; max-width: 100%; }
   .nav { padding: 14px 10px; }
   .nav-links { gap: 10px; flex-wrap: wrap; }
   .nav-links a { font-size: 9px; letter-spacing: 1px; }
-  .nav-logo { display: none; }
 }
 
 /* ==================== HERO ==================== */
@@ -509,7 +494,7 @@ img { display: block; max-width: 100%; }
       "title"
       "text"
       "sign";
-    padding: clamp(30px, 14vh, 110px) 24px;
+    padding: clamp(30px, 14vh, 110px) clamp(24px, 6vw, 40px);
   }
 }
 
@@ -838,7 +823,7 @@ img { display: block; max-width: 100%; }
   .doll-stage, .doll:nth-of-type(even) .doll-stage,
   .doll-card, .doll:nth-of-type(even) .doll-card { order: 0; }
   .doll-sway img { height: min(84vh, 864px); max-width: 96vw; }
-  .dolls-thread { display: none; }
+  .dolls-thread { left: 10px; }
   .doll-roundel { right: 2%; top: 8%; }
   .doll:nth-of-type(odd) .doll-roundel { right: auto; left: 2%; }
 }
@@ -970,8 +955,8 @@ img { display: block; max-width: 100%; }
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 20000;
-  background: #0b0a08;
+  z-index: 2000;
+  background: rgba(11,10,8,.94);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1279,11 +1264,9 @@ img { display: block; max-width: 100%; }
 
 /* — tablet — */
 @media (max-width: 900px) {
-  .showreel { padding: clamp(60px, 10vh, 120px) 24px; }
-  .track-row { gap: 14px; padding: 18px 0; }
+  .track-row { gap: 14px; padding: 18px 12px; }
   .track-eq { display: none; }
-  .track-list { padding: 0; }
-  .tracks { padding: clamp(60px, 10vh, 120px) 24px 90px; }
+  .track-list { padding: 0 clamp(16px, 4vw, 60px); }
   .doll-sway img { height: min(80vh, 700px); }
 }
 
@@ -1293,34 +1276,10 @@ img { display: block; max-width: 100%; }
   .hero-sub { max-width: 92vw; }
   .hero-tag { margin-top: 20px; }
 
-  .dolls { padding: 40px 0 0; }
-
-  .manifesto { padding: clamp(30px, 10vh, 80px) 16px; }
-
-  .showreel { padding: clamp(60px, 10vh, 120px) 16px; }
-  .showreel-note { font-size: 12px; padding: 0 16px; }
-  .drag-hint { font-size: 13px; }
-  .reel-track { padding: 20px 16px; }
-  .reel-track img { height: clamp(180px, 36vh, 300px); }
-  .reel-nav { width: 40px; height: 40px; font-size: 18px; }
-  .reel-nav-bottom { width: 42px; height: 42px; font-size: 18px; }
-
-  .track-row { grid-template-columns: 32px 1fr auto; gap: 10px; padding: 16px 0; }
-  .track-num { font-size: 10px; letter-spacing: 1.5px; }
-  .track-title { font-size: clamp(12px, 3.4vw, 15px); }
-  .track-play { width: 34px; height: 34px; }
-  .track-list { padding: 0; margin-top: 36px; }
+  .manifesto { padding: clamp(30px, 10vh, 80px) clamp(16px, 5vw, 32px); }
 
   .doll { padding: 120px 16px 30px; }
-  .doll-sway,
-  .doll-stage,
-  .doll:nth-of-type(even) .doll-stage,
-  .doll .doll-stage.reveal,
-  .doll .doll-stage.reveal.in-view,
-  .doll:nth-of-type(even) .doll-stage.reveal,
-  .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
-  .doll-sway img { height: min(86vh, 696px); max-width: none; filter: none; }
-  .doll.hovering .doll-sway img { filter: none; }
+  .doll-sway img { height: min(72vh, 580px); max-width: 92vw; }
   .doll-card h3 { font-size: clamp(22px, 5.5vw, 36px); }
   .doll-title { font-size: 14px; }
   .doll-bio { font-size: 14px; line-height: 1.75; }
@@ -1328,7 +1287,18 @@ img { display: block; max-width: 100%; }
   .doll-roundel { width: clamp(72px, 18vw, 100px); height: clamp(72px, 18vw, 100px); }
   .doll-roundel span { font-size: 7px; }
 
-  .tracks { padding: clamp(40px, 8vh, 80px) 16px 60px; }
+  .showreel-note { font-size: 12px; padding: 0 12px; }
+  .drag-hint { font-size: 13px; }
+  .reel-track img { height: clamp(180px, 36vh, 300px); }
+  .reel-nav { width: 40px; height: 40px; font-size: 18px; }
+  .reel-nav-bottom { width: 42px; height: 42px; font-size: 18px; }
+
+  .track-row { grid-template-columns: 32px 1fr auto; gap: 10px; padding: 16px 8px; }
+  .track-num { font-size: 10px; letter-spacing: 1.5px; }
+  .track-title { font-size: clamp(12px, 3.4vw, 15px); }
+  .track-play { width: 34px; height: 34px; }
+  .track-list { padding: 0 12px; margin-top: 36px; }
+
   .footer { padding: 40px 16px 30px; }
   .footer-grid {
     grid-template-columns: 1fr;
@@ -1342,6 +1312,8 @@ img { display: block; max-width: 100%; }
   .footer-big { order: -1; }
   .footer-big img { width: clamp(140px, 30vw, 200px); }
   .footer-sway { font-size: 10px; }
+
+  .tracks { padding: clamp(40px, 8vh, 80px) 0 60px; }
 }
 
 /* — iPhone SE / 375px — */
@@ -1352,7 +1324,6 @@ img { display: block; max-width: 100%; }
   .stitch-btn { font-size: 11px; padding: 14px 24px; letter-spacing: 2px; }
   .hero-scroll { bottom: 16px; }
 
-  .manifesto { padding: clamp(30px, 10vh, 80px) 14px; }
   .manifesto-title { font-size: 24px; }
   .manifesto-text { font-size: 13px; }
   .manifesto-body { font-size: 14px; line-height: 1.8; }
@@ -1362,15 +1333,7 @@ img { display: block; max-width: 100%; }
 
   .dolls-heading { font-size: 36px; }
   .doll { padding: 90px 14px 24px; }
-  .doll-sway,
-  .doll-stage,
-  .doll:nth-of-type(even) .doll-stage,
-  .doll .doll-stage.reveal,
-  .doll .doll-stage.reveal.in-view,
-  .doll:nth-of-type(even) .doll-stage.reveal,
-  .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
-  .doll-sway img { height: min(72vh, 504px); max-width: none; filter: none; }
-  .doll.hovering .doll-sway img { filter: none; }
+  .doll-sway img { height: min(60vh, 420px); max-width: 94vw; }
   .doll-card h3 { font-size: 20px; letter-spacing: 1px; }
   .doll-role { font-size: 9px; letter-spacing: 3px; margin-bottom: 10px; }
   .doll-title { font-size: 13px; margin-top: 6px; }
@@ -1380,19 +1343,17 @@ img { display: block; max-width: 100%; }
   .doll-roundel { width: 60px; height: 60px; top: 6%; }
   .doll-roundel span { font-size: 6px; letter-spacing: 1px; }
 
-  .showreel { padding: clamp(40px, 8vh, 80px) 14px; }
   .showreel-heading, .tracks-heading { font-size: 32px; }
-  .showreel-note { font-size: 11px; padding: 0 14px; }
+  .showreel-note { font-size: 11px; }
   .drag-hint { font-size: 12px; }
-  .reel-track { gap: 14px; padding: 14px 14px; }
+  .reel-track { gap: 14px; padding: 14px 20px; }
   .reel-track img { height: clamp(160px, 30vh, 240px); }
   .reel-nav { width: 34px; height: 34px; font-size: 16px; }
   .reel-nav-bottom { width: 36px; height: 36px; font-size: 16px; }
   .reel-controls span { font-size: 12px; }
 
-  .tracks { padding: clamp(40px, 8vh, 80px) 14px 60px; }
-  .track-list { padding: 0; margin-top: 28px; }
-  .track-row { grid-template-columns: 28px 1fr auto; gap: 8px; padding: 14px 0; }
+  .track-list { padding: 0 8px; margin-top: 28px; }
+  .track-row { grid-template-columns: 28px 1fr auto; gap: 8px; padding: 14px 6px; }
   .track-num { font-size: 9px; letter-spacing: 1px; }
   .track-title { font-size: 12px; }
   .track-play { width: 30px; height: 30px; }

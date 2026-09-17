@@ -366,12 +366,8 @@ const dolls = $$('.doll');
 const sw = $$('.doll-sway');
 const roundels = $$('.doll-roundel');
 
-/* mobile: no sway/parallax/float — characters are locked center */
-const swayMobileGte = window.matchMedia && window.matchMedia('(min-width: 721px)');
-
 const swayState = sw.map(() => ({ rot: 0, ty: 0, sc: 1 }));
 function dollDriver() {
-  if (swayMobileGte && !swayMobileGte.matches) return; /* lock center on mobile */
   const vh = window.innerHeight;
   const swCenters = new Array(sw.length);
   for (let i = 0; i < sw.length; i++) {
@@ -413,7 +409,6 @@ let _dollsPaused = false;
 window._dollsPaused = (v) => { _dollsPaused = v; };
 function applyFloat(t) {
   rafFloat = requestAnimationFrame(applyFloat);
-  if (swayMobileGte && !swayMobileGte.matches) return; /* no jelly float on mobile */
   if (_dollsPaused || document.hidden) return;
   if (document.hidden) return;
   for (let i = 0; i < sw.length; i++) {
@@ -456,8 +451,6 @@ dolls.forEach((el) => {
 
 /* ============ doll ember particles ============ */
 function dollFxInit() {
-  /* skip embers entirely on mobile — canvas is display:none there anyway */
-  if (window.matchMedia && window.matchMedia('(max-width: 720px)').matches) return;
   const accentOf = (d) => {
     const v = getComputedStyle(d).getPropertyValue('--acc').trim();
     return v ? v : '#d8a84e';
