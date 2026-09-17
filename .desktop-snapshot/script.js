@@ -364,7 +364,6 @@ window.addEventListener('pointerleave', () => {
 /* ============ doll sway on scroll + parallax ============ */
 const dolls = $$('.doll');
 const sw = $$('.doll-sway');
-const roundels = $$('.doll-roundel');
 
 /* mobile: no sway/parallax/float — characters are locked center */
 const swayMobileGte = window.matchMedia && window.matchMedia('(min-width: 721px)');
@@ -378,11 +377,6 @@ function dollDriver() {
     const r = sw[i].getBoundingClientRect();
     swCenters[i] = r.top + r.height / 2 - vh / 2;
   }
-  const rCenters = new Array(roundels.length);
-  for (let i = 0; i < roundels.length; i++) {
-    const r = roundels[i].getBoundingClientRect();
-    rCenters[i] = r.top + r.height / 2 - vh / 2;
-  }
   for (let i = 0; i < sw.length; i++) {
     const progress = Math.max(-1, Math.min(1, swCenters[i] / (vh * 0.55)));
     const rot = progress * 9;
@@ -391,11 +385,6 @@ function dollDriver() {
     swayState[i].rot = sway;
     swayState[i].ty = progress * 14;
     swayState[i].sc = scale;
-  }
-  for (let i = 0; i < roundels.length; i++) {
-    const progress = Math.max(-1, Math.min(1, rCenters[i] / (vh * 0.6)));
-    const span = roundels[i].querySelector('span');
-    if (span) span.style.setProperty('--rr', `${progress * -30}deg`);
   }
 }
 
@@ -880,7 +869,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   $$('.hero-logo').forEach((el) => { el.style.animation = 'none'; });
   $$('.track-eq i').forEach((el) => { el.style.animation = 'none'; });
   $$('[data-tilt]').forEach((el) => { el.style.transition = 'none'; });
-  $$('.doll-roundel').forEach((el) => { el.style.animation = 'none'; });
   sw.forEach((el, i) => {
     const s = swayState[i];
     el.style.transform = `rotate(${s.rot}deg) translateY(${s.ty}px) scale(${s.sc})`;

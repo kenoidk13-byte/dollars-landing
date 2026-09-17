@@ -364,7 +364,6 @@ window.addEventListener('pointerleave', () => {
 /* ============ doll sway on scroll + parallax ============ */
 const dolls = $$('.doll');
 const sw = $$('.doll-sway');
-const roundels = $$('.doll-roundel');
 
 /* mobile: no sway/parallax/float — characters are locked center */
 const swayMobileGte = window.matchMedia && window.matchMedia('(min-width: 721px)');
@@ -378,11 +377,6 @@ function dollDriver() {
     const r = sw[i].getBoundingClientRect();
     swCenters[i] = r.top + r.height / 2 - vh / 2;
   }
-  const rCenters = new Array(roundels.length);
-  for (let i = 0; i < roundels.length; i++) {
-    const r = roundels[i].getBoundingClientRect();
-    rCenters[i] = r.top + r.height / 2 - vh / 2;
-  }
   for (let i = 0; i < sw.length; i++) {
     const progress = Math.max(-1, Math.min(1, swCenters[i] / (vh * 0.55)));
     const rot = progress * 9;
@@ -391,11 +385,6 @@ function dollDriver() {
     swayState[i].rot = sway;
     swayState[i].ty = progress * 14;
     swayState[i].sc = scale;
-  }
-  for (let i = 0; i < roundels.length; i++) {
-    const progress = Math.max(-1, Math.min(1, rCenters[i] / (vh * 0.6)));
-    const span = roundels[i].querySelector('span');
-    if (span) span.style.setProperty('--rr', `${progress * -30}deg`);
   }
 }
 
@@ -441,6 +430,7 @@ function onScrollBatch() {
   scrollTicking = false;
   dollDriver();
   dollThreadDriver();
+  navScrollState();
 }
 function scheduleScroll() {
   if (!scrollTicking) {
@@ -453,6 +443,49 @@ dolls.forEach((el) => {
   el.addEventListener('pointerenter', () => el.classList.add('hovering'));
   el.addEventListener('pointerleave', () => el.classList.remove('hovering'));
 });
+
+/* ============ nav collapse to burger + mini logo on scroll ============ */
+const heroLogoRef = $('.hero-logo');
+function navScrollState() {
+  const n = $('.nav');
+  if (!n) return;
+  const y = window.scrollY;
+  const rise = Math.max(0, Math.min(1, y / (window.innerHeight * 0.45)));
+  /* mini logo (and burger) appear only after the hero logo has scrolled away */
+  const scrolled = rise >= 1;
+  n.classList.toggle('scrolled', scrolled);
+  /* big hero logo "rides up" out of the way as you scroll, mini logo takes over */
+  if (heroLogoRef) {
+    if (y > 4) {
+      heroLogoRef.style.animation = 'none';
+      heroLogoRef.style.translate = `0 ${(-y * 0.9).toFixed(1)}px`;
+      heroLogoRef.style.opacity = String(Math.max(0, 1 - rise));
+    } else {
+      heroLogoRef.style.animation = '';
+      heroLogoRef.style.translate = '';
+      heroLogoRef.style.opacity = '';
+    }
+  }
+}
+const navBurger = $('#navBurger');
+if (navBurger) {
+  navBurger.addEventListener('click', () => {
+    const n = $('.nav');
+    if (!n) return;
+    const open = n.classList.toggle('nav-open');
+    navBurger.setAttribute('aria-expanded', String(open));
+  });
+}
+const navLinksDrop = $('.nav-links');
+if (navLinksDrop) {
+  navLinksDrop.addEventListener('click', (e) => {
+    if (e.target.closest('a') && $('.nav')) {
+      const n = $('.nav');
+      n.classList.remove('nav-open');
+      if (navBurger) navBurger.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
 
 /* ============ doll ember particles ============ */
 function dollFxInit() {
@@ -880,7 +913,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   $$('.hero-logo').forEach((el) => { el.style.animation = 'none'; });
   $$('.track-eq i').forEach((el) => { el.style.animation = 'none'; });
   $$('[data-tilt]').forEach((el) => { el.style.transition = 'none'; });
-  $$('.doll-roundel').forEach((el) => { el.style.animation = 'none'; });
   sw.forEach((el, i) => {
     const s = swayState[i];
     el.style.transform = `rotate(${s.rot}deg) translateY(${s.ty}px) scale(${s.sc})`;

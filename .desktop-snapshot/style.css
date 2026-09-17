@@ -611,7 +611,6 @@ img { display: block; max-width: 100%; }
 }
 .doll:nth-of-type(even) .doll-stage { order: 2; transform: translateX(-70px); }
 .doll:nth-of-type(even) .doll-card  { order: 1; }
-.doll:nth-of-type(odd) .doll-roundel { right: auto; left: 10%; }
 
 /* big faint button behind the manifesto text block */
 .manifesto-btn {
@@ -676,51 +675,7 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 
-/* spinning roundel badge */
-.doll-roundel {
-  position: absolute;
-  z-index: 3;
-  top: 12%;
-  right: 10%;
-  width: clamp(96px, 10vw, 132px);
-  height: clamp(96px, 10vw, 132px);
-  border: 1px dashed rgba(216,201,163,.5);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 2px;
-  animation: roundel-spin 16s linear infinite;
-  background: rgba(11,10,8,.72);
-}
-.doll-roundel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: url('button.webp') center / cover no-repeat;
-  opacity: 0;
-  transition: opacity .6s ease;
-  pointer-events: none;
-}
-.doll-roundel:hover::before { opacity: 1; }
-.doll-roundel:hover span { opacity: 0; }
-.doll-roundel span {
-  position: relative;
-  z-index: 1;
-  font-family: var(--disp);
-  font-weight: 500;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--burlap);
-  text-align: center;
-  line-height: 1.5;
-  animation: none;
-  transform: rotate(var(--rr, 0deg));
-  transition: opacity .6s ease;
-}
-@keyframes roundel-spin { to { transform: rotate(360deg); } }
+/* spinning roundel badge — removed */
 
 .doll-noose {
   position: absolute;
@@ -839,8 +794,6 @@ img { display: block; max-width: 100%; }
   .doll-card, .doll:nth-of-type(even) .doll-card { order: 0; }
   .doll-sway img { height: min(84vh, 864px); max-width: 96vw; }
   .dolls-thread { display: none; }
-  .doll-roundel { right: 2%; top: 8%; }
-  .doll:nth-of-type(odd) .doll-roundel { right: auto; left: 2%; }
 }
 
 /* ==================== SHOWREEL ==================== */
@@ -1289,29 +1242,45 @@ img { display: block; max-width: 100%; }
 
 /* — mobile — */
 @media (max-width: 720px) {
-  .hero { padding: 100px 16px 60px; min-height: 100svh; }
+  .hero { padding: 100px 20px 60px; min-height: 100svh; }
   .hero-sub { max-width: 92vw; }
   .hero-tag { margin-top: 20px; }
 
   .dolls { padding: 40px 0 0; }
 
-  .manifesto { padding: clamp(30px, 10vh, 80px) 16px; }
+  .manifesto,
+  .manifesto-title,
+  .manifesto-body,
+  .manifesto-sign,
+  .manifesto-text { text-align: center; }
 
-  .showreel { padding: clamp(60px, 10vh, 120px) 16px; }
-  .showreel-note { font-size: 12px; padding: 0 16px; }
+  .doll-card,
+  .doll-card h3,
+  .doll-card .doll-role,
+  .doll-card .doll-title,
+  .doll-card .doll-bio,
+  .doll-card .doll-scrawl { text-align: center; }
+  .doll-more { margin: 44px auto 0; }
+
+  .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
+
+  .showreel { padding: clamp(60px, 10vh, 120px) 20px; }
+  .showreel-note { font-size: 12px; padding: 0 20px; }
   .drag-hint { font-size: 13px; }
-  .reel-track { padding: 20px 16px; }
+  .reel-track { padding: 20px 20px; }
   .reel-track img { height: clamp(180px, 36vh, 300px); }
   .reel-nav { width: 40px; height: 40px; font-size: 18px; }
   .reel-nav-bottom { width: 42px; height: 42px; font-size: 18px; }
 
-  .track-row { grid-template-columns: 32px 1fr auto; gap: 10px; padding: 16px 0; }
-  .track-num { font-size: 10px; letter-spacing: 1.5px; }
-  .track-title { font-size: clamp(12px, 3.4vw, 15px); }
+  .track-row { grid-template-columns: 28px 1fr auto auto; gap: 10px; padding: 16px 0; }
+  .track-num { font-size: 8.7px; letter-spacing: 1.3px; }
+  .track-title { font-size: clamp(10.7px, 3vw, 13.7px); }
+  .track-time-lab { font-size: 10.7px; letter-spacing: 1.7px; }
   .track-play { width: 34px; height: 34px; }
   .track-list { padding: 0; margin-top: 36px; }
+  .track-num, .track-title { text-align: center; }
 
-  .doll { padding: 120px 16px 30px; }
+  .doll { padding: 120px 20px 30px; }
   .doll-sway,
   .doll-stage,
   .doll:nth-of-type(even) .doll-stage,
@@ -1319,17 +1288,16 @@ img { display: block; max-width: 100%; }
   .doll .doll-stage.reveal.in-view,
   .doll:nth-of-type(even) .doll-stage.reveal,
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
-  .doll-sway img { height: min(86vh, 696px); max-width: none; filter: none; }
+  .doll-sway, .doll-stage { min-width: 0; }
+  .doll-sway img { height: min(103vh, 835px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: clamp(22px, 5.5vw, 36px); }
   .doll-title { font-size: 14px; }
   .doll-bio { font-size: 14px; line-height: 1.75; }
   .doll-scrawl { font-size: 13px; margin-top: 18px; }
-  .doll-roundel { width: clamp(72px, 18vw, 100px); height: clamp(72px, 18vw, 100px); }
-  .doll-roundel span { font-size: 7px; }
 
-  .tracks { padding: clamp(40px, 8vh, 80px) 16px 60px; }
-  .footer { padding: 40px 16px 30px; }
+  .tracks { padding: clamp(40px, 8vh, 80px) 20px 60px; }
+  .footer { padding: 40px 20px 30px; }
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
@@ -1346,13 +1314,13 @@ img { display: block; max-width: 100%; }
 
 /* — iPhone SE / 375px — */
 @media (max-width: 375px) {
-  .hero { padding: 80px 14px 50px; }
+  .hero { padding: 80px 20px 50px; }
   .hero-tag { font-size: 18px; margin-top: 16px; }
   .hero-sub { font-size: 12px; max-width: 100%; }
   .stitch-btn { font-size: 11px; padding: 14px 24px; letter-spacing: 2px; }
   .hero-scroll { bottom: 16px; }
 
-  .manifesto { padding: clamp(30px, 10vh, 80px) 14px; }
+  .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
   .manifesto-title { font-size: 24px; }
   .manifesto-text { font-size: 13px; }
   .manifesto-body { font-size: 14px; line-height: 1.8; }
@@ -1361,7 +1329,7 @@ img { display: block; max-width: 100%; }
   .tracks-btn { width: 220px; }
 
   .dolls-heading { font-size: 36px; }
-  .doll { padding: 90px 14px 24px; }
+  .doll { padding: 90px 20px 24px; }
   .doll-sway,
   .doll-stage,
   .doll:nth-of-type(even) .doll-stage,
@@ -1369,7 +1337,8 @@ img { display: block; max-width: 100%; }
   .doll .doll-stage.reveal.in-view,
   .doll:nth-of-type(even) .doll-stage.reveal,
   .doll:nth-of-type(even) .doll-stage.reveal.in-view { transform: none; }
-  .doll-sway img { height: min(72vh, 504px); max-width: none; filter: none; }
+  .doll-sway, .doll-stage { min-width: 0; }
+  .doll-sway img { height: min(72vh, 504px); max-width: 100%; filter: none; }
   .doll.hovering .doll-sway img { filter: none; }
   .doll-card h3 { font-size: 20px; letter-spacing: 1px; }
   .doll-role { font-size: 9px; letter-spacing: 3px; margin-bottom: 10px; }
@@ -1377,29 +1346,28 @@ img { display: block; max-width: 100%; }
   .doll-bio { font-size: 13px; line-height: 1.7; margin-top: 16px; }
   .doll-scrawl { font-size: 12px; margin-top: 14px; padding-top: 10px; }
   .doll-more { font-size: 10px; padding: 10px 18px; }
-  .doll-roundel { width: 60px; height: 60px; top: 6%; }
-  .doll-roundel span { font-size: 6px; letter-spacing: 1px; }
 
-  .showreel { padding: clamp(40px, 8vh, 80px) 14px; }
+  .showreel { padding: clamp(40px, 8vh, 80px) 20px; }
   .showreel-heading, .tracks-heading { font-size: 32px; }
-  .showreel-note { font-size: 11px; padding: 0 14px; }
+  .showreel-note { font-size: 11px; padding: 0 20px; }
   .drag-hint { font-size: 12px; }
-  .reel-track { gap: 14px; padding: 14px 14px; }
+  .reel-track { gap: 14px; padding: 14px 20px; }
   .reel-track img { height: clamp(160px, 30vh, 240px); }
   .reel-nav { width: 34px; height: 34px; font-size: 16px; }
   .reel-nav-bottom { width: 36px; height: 36px; font-size: 16px; }
   .reel-controls span { font-size: 12px; }
 
-  .tracks { padding: clamp(40px, 8vh, 80px) 14px 60px; }
+  .tracks { padding: clamp(40px, 8vh, 80px) 20px 60px; }
   .track-list { padding: 0; margin-top: 28px; }
-  .track-row { grid-template-columns: 28px 1fr auto; gap: 8px; padding: 14px 0; }
-  .track-num { font-size: 9px; letter-spacing: 1px; }
-  .track-title { font-size: 12px; }
+  .track-row { grid-template-columns: 24px 1fr auto auto; gap: 8px; padding: 14px 0; }
+  .track-num { font-size: 7.7px; letter-spacing: 1px; }
+  .track-title { font-size: 10.7px; }
+  .track-time-lab { font-size: 10.7px; letter-spacing: 1px; }
   .track-play { width: 30px; height: 30px; }
   .track-play-ic svg { width: 10px; height: 10px; }
   .tracks-note--foot { font-size: 11px; }
 
-  .footer { padding: 30px 14px 24px; }
+  .footer { padding: 30px 20px 24px; }
   .footer-big img { width: 120px; }
   .footer-line { font-size: 8px; letter-spacing: 1.5px; }
   .footer-mail-wrap { font-size: 8px; }
