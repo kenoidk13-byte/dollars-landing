@@ -378,6 +378,11 @@ img { display: block; max-width: 100%; }
     text-align: left;
   }
   .doll-modal-body p + p { margin-top: 14px; }
+  .doll-modal-box .doll-scrawl {
+    margin-top: 28px;
+    padding-top: 14px;
+    font-size: 15px;
+  }
 }
 
 .nav-links {
