@@ -167,3 +167,16 @@
 - Плотность фоновых ниток (`bgCount`) правилась только в desktop-ветке; мобильная ветка (`mobileInit`, ≤720) не тронута —
   на 390/430/720 по-прежнему 80 ниток. Мобильное поведение идентично baseline.
   (diff root↔snapshot по script.js = desktop-только: `bgCount` + Lenis. Мобильное поведение идентично baseline.)
+
+## Галерея (lightbox): свайпы + крестик в стиле меню (2026-09-17, МОБИЛА)
+- Крестик теперь как у открытого меню (`.nav-close`): `@media (max-width:900px)` →
+  `.lightbox-close { position:fixed; top:22px; right:22px; width/height:34px; border:0; background:transparent; font-size:0 }`,
+  `.lb-glyph { display:none }`, палочки `.lb-bar` (2px, `var(--rust)`, ±45°). Было: 36×36, рамка 1px, глиф `✕`, absolute −16/−16.
+  Стили лежат в отдельном блоке `@media (max-width:900px)` (десктопный `min-width:901px` НЕ тронут — desktop frozen).
+- Свайп пальцем по галерее листает фото: `script.js` сразу после keydown-обработчика, блок `lbTouch`
+  (`matchMedia('(pointer: coarse)') || 'ontouchstart' in window`) — на десктопе не подключается.
+  Порог: `|dx| ≥ 50px`, `|dy| ≤ |dx|*1.3` (только горизонталь), `dt ≤ 600ms`; свайп влево → следующее, вправо → предыдущее.
+  Старт на крестике/стрелках игнорируется (`.lightbox-close, .lightbox-nav`), маленький тап (<50px) ничего не листает.
+- Проверено (390/430/720): крестик `fixed` 22/22 34×34, border 0, glyph none, 2 палочки 2px rust; свайп влево/вправо меняет
+  `#lightboxImg` (`074122` ⇄ `082355`), тап не листает, крестик закрывает; ошибок нет. Desktop 1440: крестик прежний, свайп не активен.
+- Бейстеры: `style.css?v=490`, `script.js?v=445`. Скрипт: `/tmp/mobilb.js`. Бэкапы: `/tmp/script.pre-mobilb.js`, `/tmp/style.pre-mobilb.css`.

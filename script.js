@@ -783,6 +783,30 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') lightboxShow(lightboxIndex + 1);
 });
 
+/* mobile: swipe left/right to flip gallery photos (touch input only) */
+const lbTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+if (lbTouch) {
+  const lightboxEl = $('#lightbox');
+  let swipeStart = null;
+  lightboxEl.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    swipeStart = { x: t.clientX, y: t.clientY, time: Date.now() };
+  }, { passive: true });
+  lightboxEl.addEventListener('touchend', (e) => {
+    if (!swipeStart) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - swipeStart.x;
+    const dy = t.clientY - swipeStart.y;
+    const dt = Date.now() - swipeStart.time;
+    swipeStart = null;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) * 1.3) return;
+    if (dt > 600) return;
+    if (e.target.closest('.lightbox-close, .lightbox-nav')) return;
+    if (dx < 0) lightboxShow(lightboxIndex + 1);
+    else lightboxShow(lightboxIndex - 1);
+  }, { passive: true });
+}
+
 /* ============ track list player ============ */
 const SONG_FILES = [
   'Anthem.mp3',
