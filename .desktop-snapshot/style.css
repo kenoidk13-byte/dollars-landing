@@ -264,6 +264,7 @@ img { display: block; max-width: 100%; }
     justify-content: center;
     gap: 30px;
     margin: 0;
+    padding-bottom: 100px;
     background: rgba(11, 10, 8, .97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -403,6 +404,10 @@ img { display: block; max-width: 100%; }
 }
 .doll-modal-box .doll-role { text-align: left; line-height: 1.3; }
 .doll-modal-box .doll-title { font-size: 18px; line-height: 1.5; text-align: left; }
+@media (min-width: 901px) {
+  .doll-modal-box .doll-title { font-size: 26px; }
+  .doll-modal-box > * { max-width: 1214px; }
+}
 .doll-modal-body {
   display: flex;
   flex-direction: row;
@@ -1586,6 +1591,7 @@ img { display: block; max-width: 100%; }
   .doll[data-doll="pulse"] .doll-sway img { width: 70.8%; }
   .doll-card h3 { font-size: clamp(31px, 4.16vw, 55px); }
   .doll-title { font-size: 18px; }
+  .manifesto-sign .manifesto-now { display: block; }
 }
 
 /* — mobile — */

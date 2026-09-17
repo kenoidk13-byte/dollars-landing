@@ -122,3 +122,15 @@
 ## Уточнение: мобильный крестик галереи (2026-09-17)
 - У ≤900px галерейный крестик теперь в стиле меню — отдельный блок `@media (max-width:900px)` (2 палочки rust, fixed 22/22, 34×34).
 - Десктопный блок `@media (min-width:901px)` не изменялся (desktop frozen), поведение на >900px идентично снапшоту.
+
+## Сессия 2026-09-17 (2): манифест в одну строку, ники 26px, колонка модалки 800px (ДЕСКТОП)
+- `.manifesto-sign` теперь `— you know your worth. <span class="manifesto-now">Now sing it.</span>` —
+  на >900px «Now sing it.» снова на строке выше (одна строка). Перенос на мобиле сохраняется CSS:
+  `@media (max-width:900px) { .manifesto-sign .manifesto-now { display:block } }`.
+- Ники персонажей в модалке (`.doll-title`) — только >900px: 18 → **26px** (`@media (min-width:901px)`).
+- Текстовая колонка модалки >900px: 692 → **800px**. Тело `.doll-modal-box > *` на десктопе `max-width: 1214px`
+  (фото 380 + gap 34 + текст 800) в `@media (min-width:901px)`. Глобальный `max-width:1100px` не троган.
+- Замер 1280/1440/1920: текст ровно 800px; строк: Melvin 10, Rusty 13, Stacy 12, Kyle&Loki 17 (было 11/16/14/20).
+- Карточки THE BAND: тизеры Voice (Kyle&Loki) и Pulse (Stacy) сокращены до ~360–370 символов в стиле остальных
+  (био 182px, карточка 543px — как Rusty; Melvin остаётся 574/213).
+- Бейстер: `style.css?v=490` → **`491`** (script.js не менялся — `?v=445`).
