@@ -489,6 +489,37 @@ if (navLinksDrop) {
   });
 }
 
+/* ============ doll info modal ============ */
+function openDollModal(name) {
+  const m = $('#dollModal-' + name);
+  if (!m) return;
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+}
+function closeDollModal() {
+  $$('.doll-modal').forEach(m => m.classList.remove('open'));
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+}
+$$('.doll-more[data-doll-modal]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openDollModal(btn.dataset.dollModal);
+  });
+});
+$$('.doll-modal-close').forEach(btn => {
+  btn.addEventListener('click', () => closeDollModal());
+});
+$$('.doll-modal').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if (e.target === m) closeDollModal();
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeDollModal();
+});
+
 /* ============ doll ember particles ============ */
 function dollFxInit() {
   /* skip embers entirely on mobile — canvas is display:none there anyway */
