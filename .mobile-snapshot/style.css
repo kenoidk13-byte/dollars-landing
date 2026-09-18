@@ -596,6 +596,8 @@ img { display: block; max-width: 100%; }
 .hero-orbit span {
   position: absolute;
   inset: 0;
+  color: transparent; /* hide leftover "DOLLARS DOLLARS..." span text — only ::before slogans render */
+  font-size: 0;
   animation: spin-rev 60s linear infinite;
 }
 .hero-orbit span::before {
