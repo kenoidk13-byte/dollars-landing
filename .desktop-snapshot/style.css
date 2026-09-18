@@ -736,7 +736,7 @@ img { display: block; max-width: 100%; }
   column-gap: clamp(20px, 5vw, 70px);
   row-gap: 10px;
   align-items: start;
-  padding: clamp(30px, 14vh, 110px) 0;
+  padding: clamp(30px, 14vh, 110px) 24px;
   text-align: left;
 }
 .manifesto-title,
@@ -1591,6 +1591,7 @@ img { display: block; max-width: 100%; }
   .doll[data-doll="pulse"] .doll-sway img { width: 70.8%; }
   .doll-card h3 { font-size: clamp(31px, 4.16vw, 55px); }
   .doll-title { font-size: 18px; }
+  .manifesto { padding: clamp(30px, 14vh, 110px) 24px; }
   .manifesto-sign .manifesto-now { display: block; }
 }
 
