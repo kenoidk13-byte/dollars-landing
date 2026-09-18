@@ -21,7 +21,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   }
 
   const img = new Image();
-  img.src = 'Logo.webp?v=389';
+  img.src = 'Logo.webp?v=401';
   img.onload = () => start();
   img.onerror = () => { box.classList.add('done'); unlock(); };
 
@@ -55,8 +55,8 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const t0 = performance.now();
-    const MIN_MS = 1800;
-    const SAFE_MS = 2800;
+    const MIN_MS = 950;
+    const SAFE_MS = 1500;
 
     function frame(now) {
       const elapsed = now - t0;
@@ -659,27 +659,45 @@ dollThreadDriver();
 
 /* ============ gallery ============ */
 const GALLERY = [
-  "galery/20260910_074122_0_UTC_0.webp",
-  "galery/20260910_082355_0_UTC_0.webp",
-  "galery/20260910_085256_0_UTC_0.webp",
-  "galery/20260910_094159_0_UTC_0.webp",
-  "galery/20260910_100136_0_UTC_0.webp",
-  "galery/20260910_112837_0_UTC_0.webp",
-  "galery/20260910_174507_0_UTC_0.webp",
+  "galery/20260918_072301_0_UTC_0.webp",
+  "galery/20260918_072819_0_UTC_0.webp",
+  "galery/20260918_092806_0_UTC_0.webp",
+  "galery/20260918_094508_0_UTC_0.webp",
+  "galery/20260918_095852_0_UTC_0.webp",
+  "galery/20260910_174255_0_UTC_0.webp",
+  "galery/20260918_075713_0_UTC_0.webp",
+  "galery/20260918_095253_0_UTC_0.webp",
   "galery/20260910_190406_0_UTC_0.webp",
-  "galery/20260910_190739_0_UTC_0.webp",
-  "galery/20260910_191047_0_UTC_0.webp"
+  "galery/20260914_121614_0_UTC_0.webp",
+  "galery/20260918_071645_0_UTC_0.webp",
+  "galery/20260918_080402_0_UTC_0.webp",
+  "galery/20260918_100357_0_UTC_0.webp",
+  "galery/20260918_073800_0_UTC_0.webp",
+  "galery/20260918_072322_0_UTC_0.webp",
+  "galery/20260918_100012_0_UTC_0.webp",
+  "galery/20260918_074549_0_UTC_0.webp",
+  "galery/20260918_101243_0_UTC_0.webp",
+  "galery/20260914_121825_0_UTC_0.webp",
+  "galery/20260918_075128_0_UTC_0.webp",
+  "galery/20260918_083825_0_UTC_0.webp",
+  "galery/20260918_080436_0_UTC_0.webp",
+  "galery/20260918_071600_0_UTC_0.webp",
+  "galery/20260910_173914_0_UTC_0.webp",
+  "galery/20260918_100828_0_UTC_0.webp",
+  "galery/20260918_072509_0_UTC_0.webp",
+  "galery/20260918_092714_0_UTC_0.webp",
+  "galery/20260918_075130_0_UTC_0.webp",
+  "galery/20260910_112111_0_UTC_0.webp",
+  "galery/20260918_073428_0_UTC_0.webp",
+  "galery/20260918_073439_0_UTC_0.webp",
+  "galery/20260910_174501_0_UTC_0.webp",
+  "galery/20260918_100930_0_UTC_0.webp",
+  "galery/20260910_191047_0_UTC_0.webp",
+  "galery/20260910_174507_0_UTC_0.webp",
 ];
 const CAPS = [
-  "who sold what to stand here?",
-  "gold dust and feedback",
-  "you can't outrun the doll",
-  "sound check for the afterlife",
-  "four dolls, one heartbeat",
-  "interval — nobody leaves",
   "the encore that wasn't",
   "amber light, rust voice",
-  "last dollar, first amen",
   "the curtain is just fabric"
 ];
 
