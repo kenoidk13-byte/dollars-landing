@@ -475,6 +475,8 @@ function onScrollBatch() {
   scrollTicking = false;
   dollDriver();
   dollThreadDriver();
+  const n = $('.nav');
+  if (n) n.classList.toggle('nav-shadow', window.scrollY > 8);
 }
 function scheduleScroll() {
   if (!scrollTicking) {

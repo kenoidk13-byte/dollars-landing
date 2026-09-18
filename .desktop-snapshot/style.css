@@ -407,6 +407,20 @@ img { display: block; max-width: 100%; }
 @media (min-width: 901px) {
   .doll-modal-box .doll-title { font-size: 26px; }
   .doll-modal-box > * { max-width: 1214px; }
+
+  /* scroll scrim behind the fixed desktop nav — darker at top, fading to transparent */
+  .nav::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 140px;
+    background: linear-gradient(rgba(11,10,8,.74), rgba(11,10,8,0));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .35s ease;
+    z-index: -1;
+  }
+  .nav.nav-shadow::before { opacity: 1; }
 }
 .doll-modal-body {
   display: flex;
