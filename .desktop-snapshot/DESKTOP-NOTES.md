@@ -11,7 +11,7 @@
 - Шрифты: --disp Unbounded, --body Inter Tight, --scrawl Permanent Marker.
 - Hero-logo: width min(817px, 74vw) при >=681px; float анимация hero-logo-float.
 - Hero-orbit: 140vmin, spin 60s, три span-кольца.
-- Thread canvas (#threads): threadCount = min(130, max(80, width/10)), фоновые bgThreads до 220, Verlet физика, MOUSE_RADIUS 96.
+- Thread canvas (#threads): threadCount = min(104, max(60, base*0.8)) на десктопе (base = min(130, max(80, width/10))); мобила ≤720 — base как раньше; Verlet физика, MOUSE_RADIUS 96.
 - Dolls: grid 1.15fr/1fr, doll-sway img height min(94vh, 1104px), даже-блоки (nth-of-type even) — картинка справа transform translateX(-70px).
 - Manifesto: grid 1.15fr/1fr (title/text/sign).
 - Showreel: горизонтальный reel, высота img clamp(220px, 40vh, 400px).
@@ -118,6 +118,22 @@
 - Замер headless 1440: **120px → 150px** за тик (deltaY 120). Мобила 390/720/900: `0.09 / 1` — как было.
 - Якоря `a[href^="#"]` пока `duration: 1.2` (не менял) — можно ускорить отдельно, если понадобится.
 - Бейстер `script.js?v=442` → `443` → **`444`** (финал 0.11/1.25).
+
+## Сессия 2026-09-18: нитки/пуговицы десктопа — −20% и подъём у краёв
+- Открыто пользователем явное указание работать с десктопом («теперь только десктоп»); настоящая сессия перекрывает заморозку >900px для canvas-ниток.
+- Мобильная ветка (≤720) НЕ изменена: `mobileInit` сохранена, `threadCount` там = `baseThreadCount`, `EDGE_LIFT = 1`.
+- script.js (~строки 84-146): `baseThreadCount = min(130, max(80, round(w/10)))`; десктоп `threadCount = max(60, round(baseThreadCount*0.8))`.
+- `EDGE_LIFT = mobileInit ? 1 : 0.8` в формуле длины: `length = 50 + d*(30 + random*(edgeMax-50)*sideF*EDGE_LIFT)` → крайние нитки короче, висят выше.
+- `bgCount` пересчитан от `baseThreadCount` (не от уменьшенного) → faint-слой остался 420 (плотность 2026-09-17 не тронута).
+- Замер headless 1440×900: передних 130 → **104** (−20%), краевых 30 → 24; средний низ края 307 → **240px** (макс 541 → 389px); центр 151 → 127px.
+- Проверка 901-1920: −20% ровно на всех; 720 и ниже: без изменений (производная таблица `/tmp/threadcount.js`).
+- Бейстер: `script.js?v=445` → **`446`**.
+
+## Сессия 2026-09-17 (3): имена капсом + отступы манифеста (ДЕСКТОП)
+- Имена кукол в карточках THE BAND и в модалках — капсом: `NEIL`, `KYLE&LOKI` (+ `aria-label="KYLE & LOKI"`). Только index.html.
+- Отступы манифеста: `.manifesto` базовое правило `padding: clamp(30px, 14vh, 110px) 24px;` (было 16px на десктопе после прошлой правки)
+  + `@media (max-width:900px)` для мобильных. Проверено на 390/430/520/600/720/780/820/850/900/901/930/1000/1100/1280/1440/1920.
+- Бейстер: `style.css?v=491` → **`493`** (script.js не менялся — `?v=445`).
 
 ## Уточнение: мобильный крестик галереи (2026-09-17)
 - У ≤900px галерейный крестик теперь в стиле меню — отдельный блок `@media (max-width:900px)` (2 палочки rust, fixed 22/22, 34×34).

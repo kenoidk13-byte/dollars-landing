@@ -236,9 +236,9 @@ img { display: block; max-width: 100%; }
 /* mobile nav = always-on dark bar: burger opens a fullscreen centered menu */
 @media (max-width: 900px) {
   .nav {
-    background: rgba(11, 10, 8, .92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(11, 10, 8, .70);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
   }
   .nav-logo { display: none; }
   .nav-burger,
@@ -287,7 +287,7 @@ img { display: block; max-width: 100%; }
     display: block;
     position: absolute;
     left: 0; right: 0;
-    bottom: 36px;
+    bottom: 136px;
     text-align: center;
     font-family: var(--body);
     font-size: 9.6px;
@@ -1593,6 +1593,9 @@ img { display: block; max-width: 100%; }
   .doll-title { font-size: 18px; }
   .manifesto { padding: clamp(30px, 14vh, 110px) 24px; }
   .manifesto-sign .manifesto-now { display: block; }
+  .dolls-heading { white-space: pre-line; font-size: clamp(31px, 4.16vw, 55px); }
+  .dolls-heading-band { display: block; font-size: 1.3em; }
+  .tracks-btn { display: none; }
 }
 
 /* — mobile — */
@@ -1618,6 +1621,7 @@ img { display: block; max-width: 100%; }
   .doll-more { margin: 44px auto 0; }
 
   .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
+  .dolls-heading { font-size: clamp(26px, 5.5vw, 40px); }
 
   .showreel { padding: clamp(60px, 10vh, 120px) 20px; }
   .showreel-note { font-size: 14px; padding: 0 20px; }
@@ -1683,14 +1687,15 @@ img { display: block; max-width: 100%; }
   .hero-scroll { bottom: 16px; }
 
   .manifesto { padding: clamp(30px, 10vh, 80px) 20px; }
-  .manifesto-title { font-size: 24px; }
+  .manifesto-title { font-size: 27px; }
   .manifesto-text { font-size: 15px; }
   .manifesto-body { font-size: 16px; line-height: 1.8; }
   .manifesto-btn { width: 260px; opacity: .04; }
 
   .tracks-btn { width: 220px; }
 
-  .dolls-heading { font-size: 32px; }
+  .dolls-heading { font-size: 24px; letter-spacing: 1px; }
+  .dolls-heading-band { font-size: 38px; letter-spacing: 1px; }
   .doll { padding: 32px 20px 12px; gap: 50px; }
   .doll:first-of-type { padding-top: 56px; }
   .doll + .doll { margin-top: 10px; }
@@ -1717,7 +1722,7 @@ img { display: block; max-width: 100%; }
   .doll-more { font-size: 10px; padding: 10px 18px; }
 
   .showreel { padding: clamp(40px, 8vh, 80px) 20px; }
-  .showreel-heading, .tracks-heading { font-size: 32px; }
+  .showreel-heading, .tracks-heading { font-size: 38px; }
   .showreel-note { font-size: 13px; padding: 0 20px; }
   .drag-hint { font-size: 12px; }
   .reel-track { gap: 14px; padding: 14px 20px; }

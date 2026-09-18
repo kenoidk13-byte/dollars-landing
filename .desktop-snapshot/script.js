@@ -116,17 +116,22 @@ function makeThread(anchorX, length, iterations = 8) {
   };
 }
 
-const threadCount = Math.min(130, Math.max(80, Math.round(window.innerWidth / 10)));
+const mobileInit = window.innerWidth <= 720;
+const baseThreadCount = Math.min(130, Math.max(80, Math.round(window.innerWidth / 10)));
+const threadCount = mobileInit
+  ? baseThreadCount
+  : Math.max(60, Math.round(baseThreadCount * 0.8));
 const threads = [];
 const spacing = window.innerWidth / (threadCount + 1);
 const cx = window.innerWidth / 2;
 const lenMax = Math.max(window.innerHeight * 0.85, 420);
 const edgeMax = lenMax * 0.6;
+const EDGE_LIFT = mobileInit ? 1 : 0.8;
 for (let i = 1; i <= threadCount; i++) {
   const x = spacing * i;
   const d = Math.min(1, Math.abs(x - cx) / (window.innerWidth / 2));
   const sideF = x > cx ? 1.25 : 1.1;
-  let length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF);
+  let length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF * EDGE_LIFT);
   if (Math.abs(x - cx) < window.innerWidth * 0.12) length += 30;
   threads.push(makeThread(x, length));
 }
@@ -134,10 +139,9 @@ for (let i = 1; i <= threadCount; i++) {
 /* faint background layer — the same threads, 3x longer, barely visible */
 const bgThreads = [];
 const BG_LEN_MULT = 3;
-const mobileInit = window.innerWidth <= 720;
 const bgCount = mobileInit
-  ? Math.min(80, Math.max(50, Math.round(threadCount * 1.2)))
-  : Math.min(420, Math.max(220, Math.round(threadCount * 3.4)));
+  ? Math.min(80, Math.max(50, Math.round(baseThreadCount * 1.2)))
+  : Math.min(420, Math.max(220, Math.round(baseThreadCount * 3.4)));
 const bgSpacing = window.innerWidth / (bgCount + 1);
 for (let i = 1; i <= bgCount; i++) {
   const x = bgSpacing * (i + 0.25);
@@ -325,6 +329,7 @@ const SCRAMBLE_CHARS = '$!<>-_\\/[]{}—=+*^?#FUCK';
 function scrambleIt(el) {
   const clean = el.dataset.clean || '';
   const final = el.dataset.final || el.textContent;
+  const finalHTML = el.dataset.finalHTML || el.innerHTML;
   let revealed = 0;
   const tick = setInterval(() => {
     let str = '';
@@ -337,13 +342,14 @@ function scrambleIt(el) {
     revealed++;
     if (revealed > final.length) {
       clearInterval(tick);
-      el.textContent = final;
+      el.innerHTML = finalHTML;
     }
   }, 46);
   void clean;
 }
 $$('[data-scramble]').forEach((el) => {
   el.dataset.final = el.textContent;
+  el.dataset.finalHTML = el.innerHTML;
   let t = null;
   el.addEventListener('pointerenter', () => {
     if (t) clearInterval(t);
@@ -497,6 +503,7 @@ function openDollModal(name) {
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
   if (window.lenis) window.lenis.stop();
+  history.pushState({ dollModal: name }, '');
 }
 function closeDollModal() {
   $$('.doll-modal').forEach(m => m.classList.remove('open'));
@@ -526,6 +533,9 @@ $$('.doll-modal').forEach(m => {
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeDollModal();
+});
+window.addEventListener('popstate', () => {
+  if (document.querySelector('.doll-modal.open')) closeDollModal();
 });
 
 /* ============ doll ember particles ============ */
