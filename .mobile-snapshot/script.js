@@ -92,7 +92,14 @@ function resizeCanvas() {
   H = canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  maybeRebuildThreads();
+});
+window.addEventListener('orientationchange', () => {
+  resizeCanvas();
+  maybeRebuildThreads();
+});
 
 const SEGMENT = 12;
 const GRAVITY = 0.12;
@@ -116,38 +123,55 @@ function makeThread(anchorX, length, iterations = 8) {
   };
 }
 
-const mobileInit = window.innerWidth <= 720;
-const baseThreadCount = Math.min(130, Math.max(80, Math.round(window.innerWidth / 10)));
-const threadCount = mobileInit
-  ? baseThreadCount
-  : Math.max(60, Math.round(baseThreadCount * 0.8));
-const threads = [];
-const spacing = window.innerWidth / (threadCount + 1);
-const cx = window.innerWidth / 2;
-const lenMax = Math.max(window.innerHeight * 0.85, 420);
-const edgeMax = lenMax * 0.6;
-const EDGE_LIFT = mobileInit ? 1 : 0.8;
-for (let i = 1; i <= threadCount; i++) {
-  const x = spacing * i;
-  const d = Math.min(1, Math.abs(x - cx) / (window.innerWidth / 2));
-  const sideF = x > cx ? 1.25 : 1.1;
-  let length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF * EDGE_LIFT);
-  if (Math.abs(x - cx) < window.innerWidth * 0.12) length += 30;
-  threads.push(makeThread(x, length));
+let threads = [];
+let bgThreads = [];
+const BG_LEN_MULT = 3;
+let builtW = 0, builtH = 0;
+
+function buildThreadLayout() {
+  const mobileInit = window.innerWidth <= 720;
+  const baseThreadCount = Math.min(130, Math.max(80, Math.round(window.innerWidth / 10)));
+  const threadCount = mobileInit
+    ? baseThreadCount
+    : Math.max(60, Math.round(baseThreadCount * 0.8));
+  const spacing = window.innerWidth / (threadCount + 1);
+  const cx = window.innerWidth / 2;
+  const lenMax = Math.max(window.innerHeight * 0.85, 420);
+  const edgeMax = lenMax * 0.6;
+  const EDGE_LIFT = mobileInit ? 1 : 0.8;
+  threads = [];
+  for (let i = 1; i <= threadCount; i++) {
+    const x = spacing * i;
+    const d = Math.min(1, Math.abs(x - cx) / (window.innerWidth / 2));
+    const sideF = x > cx ? 1.25 : 1.1;
+    let length = 50 + d * (30 + Math.random() * (edgeMax - 50) * sideF * EDGE_LIFT);
+    if (Math.abs(x - cx) < window.innerWidth * 0.12) length += 30;
+    threads.push(makeThread(x, length));
+  }
+
+  /* faint background layer — the same threads, 3x longer, barely visible */
+  const bgCount = mobileInit
+    ? Math.min(80, Math.max(50, Math.round(baseThreadCount * 1.2)))
+    : Math.min(420, Math.max(220, Math.round(baseThreadCount * 3.4)));
+  const bgSpacing = window.innerWidth / (bgCount + 1);
+  bgThreads = [];
+  for (let i = 1; i <= bgCount; i++) {
+    const x = bgSpacing * (i + 0.25);
+    const length = 50 + Math.random() * (lenMax * BG_LEN_MULT - 50);
+    bgThreads.push(makeThread(x, length, 3));
+  }
+  builtW = window.innerWidth;
+  builtH = window.innerHeight;
 }
 
-/* faint background layer — the same threads, 3x longer, barely visible */
-const bgThreads = [];
-const BG_LEN_MULT = 3;
-const bgCount = mobileInit
-  ? Math.min(80, Math.max(50, Math.round(baseThreadCount * 1.2)))
-  : Math.min(420, Math.max(220, Math.round(baseThreadCount * 3.4)));
-const bgSpacing = window.innerWidth / (bgCount + 1);
-for (let i = 1; i <= bgCount; i++) {
-  const x = bgSpacing * (i + 0.25);
-  const length = 50 + Math.random() * (lenMax * BG_LEN_MULT - 50);
-  bgThreads.push(makeThread(x, length, 3));
+function maybeRebuildThreads() {
+  const w = window.innerWidth, h = window.innerHeight;
+  if (Math.abs(w - builtW) > 2 || Math.abs(h - builtH) > 150) {
+    buildThreadLayout();
+  }
 }
+
+buildThreadLayout();
 
 function updateThread(thread, dt) {
   const nodes = thread.nodes;
