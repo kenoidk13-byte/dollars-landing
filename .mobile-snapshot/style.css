@@ -532,7 +532,7 @@ img { display: block; max-width: 100%; }
 /* cap draw/repaint budget on small screens */
 @media (max-width: 900px) {
   :root { --dpr-cap: 1.5; }
-  .preloader-logo, .hero-orbit, .orbit-ring, .sway-field, .marquee-2 { will-change: auto; }
+  .preloader-logo, .orbit-ring, .sway-field, .marquee-2 { will-change: auto; }
 }
 @media (max-width: 720px) {
   /* kill redundant drop-shadow/blur passes: posterize filters drop to near-flat */
@@ -545,7 +545,7 @@ img { display: block; max-width: 100%; }
   .thread-doll, .doll-soul { opacity: .9; }
 }
 @media (max-width: 520px) {
-  .hero-scroll, .hero-orbit, .orbit-eq, .roundel { display: none; }
+  .hero-scroll, .orbit-eq, .roundel { display: none; }
 }
 /* universal typography — balanced wrapping + centered copy */
 :where(h1, h2, h3, h4, h5, h6, p, blockquote, figcaption, label, dt, dd, th, td, summary) {
@@ -565,7 +565,6 @@ img { display: block; max-width: 100%; }
   .nav-links a { font-size: 10px; letter-spacing: 2px; }
 }
 @media (max-width: 720px) {
-  .hero-orbit { display: none; }
   .nav { padding: 14px 10px; }
   .nav-links { gap: 10px; flex-wrap: wrap; }
   .nav-links a { font-size: 9px; letter-spacing: 1px; }
@@ -584,43 +583,6 @@ img { display: block; max-width: 100%; }
   padding: 120px 24px 80px;
   overflow: hidden;
 }
-
-.hero-orbit {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 140vmin; height: 140vmin;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: spin 60s linear infinite;
-}
-.hero-orbit span {
-  position: absolute;
-  inset: 0;
-  color: transparent; /* hide leftover "DOLLARS DOLLARS..." span text — only ::before slogans render */
-  font-size: 0;
-  animation: spin-rev 60s linear infinite;
-}
-.hero-orbit span::before {
-  content: attr(data-none);
-  position: absolute;
-  left: 50%; top: -6px;
-  transform: translateX(-50%);
-  font-family: var(--disp);
-  font-weight: 900;
-  font-size: 26px;
-  color: var(--burlap);
-  opacity: .28;
-  white-space: nowrap;
-}
-.hero-orbit span:nth-child(1)::before { content: 'EVERYTHING AFTER THIS WAS PROFIT —'; }
-.hero-orbit span:nth-child(2)::before { content: '$ DOLLARS OUTLIVED HELL $ —'; transform: translateX(-50%) translateY(4px); color: var(--rust); opacity: .34;
-  animation: orbit-breathe 4s ease-in-out infinite alternate;
-}
-.hero-orbit span:nth-child(3)::before { content: 'SEWED SHUT. SINGING AGAIN. —'; transform: translateX(-50%) translateY(8px); color: var(--gold); opacity: .26; }
-
-@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-@keyframes spin-rev { to { transform: rotate(-360deg); } }
-@keyframes orbit-breathe { from { letter-spacing: 0; } to { letter-spacing: 6px; } }
 
 .hero-logo {
   position: relative;
