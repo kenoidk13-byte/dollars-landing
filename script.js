@@ -410,12 +410,21 @@ window.addEventListener('pointerleave', () => {
 const dolls = $$('.doll');
 const sw = $$('.doll-sway');
 
-/* mobile: no sway/parallax/float — characters are locked center */
-const swayMobileGte = window.matchMedia && window.matchMedia('(min-width: 721px)');
+/* mobile: no sway/parallax/float — characters are locked center.
+   Gated on pointer, not just width, so an iPhone in landscape
+   (844-932px >= 721px) still locks the dolls instead of playing
+   the desktop sway. */
+const swayMobileGte = window.matchMedia('(min-width: 721px) and (hover: hover) and (pointer: fine)');
 
 const swayState = sw.map(() => ({ rot: 0, ty: 0, sc: 1 }));
+function lockDolls() {
+  sw.forEach((el) => { el.style.transform = ''; });
+}
 function dollDriver() {
-  if (swayMobileGte && !swayMobileGte.matches) return; /* lock center on mobile */
+  if (swayMobileGte && !swayMobileGte.matches) {
+    lockDolls(); /* clear leftover desktop angle/settle when locked */
+    return;      /* lock center on mobile */
+  }
   const vh = window.innerHeight;
   const swCenters = new Array(sw.length);
   for (let i = 0; i < sw.length; i++) {
@@ -447,7 +456,10 @@ let _dollsPaused = false;
 window._dollsPaused = (v) => { _dollsPaused = v; };
 function applyFloat(t) {
   rafFloat = requestAnimationFrame(applyFloat);
-  if (swayMobileGte && !swayMobileGte.matches) return; /* no jelly float on mobile */
+  if (swayMobileGte && !swayMobileGte.matches) {
+    lockDolls(); /* clear any leftover desktop angle when locked */
+    return;
+  }
   if (_dollsPaused || document.hidden) return;
   if (document.hidden) return;
   for (let i = 0; i < sw.length; i++) {
@@ -486,7 +498,10 @@ function scheduleScroll() {
 }
 
 dolls.forEach((el) => {
-  el.addEventListener('pointerenter', () => el.classList.add('hovering'));
+  el.addEventListener('pointerenter', () => {
+    if (finePointer && !finePointer.matches) return; /* no sticky hover-glow on touch */
+    el.classList.add('hovering');
+  });
   el.addEventListener('pointerleave', () => el.classList.remove('hovering'));
 });
 
